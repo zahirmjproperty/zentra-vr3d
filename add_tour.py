@@ -81,6 +81,13 @@ def main():
     build_manifest()
     print()
 
+    # Auto-generate QR code
+    try:
+        from generate_qr import generate as gen_qr
+        gen_qr(tour_id, path)
+    except Exception as e:
+        print(f"  ⚠ QR generation: {e}")
+
     print("To view: https://vr3d.zentrapropertygroup.com/tour.html?id=" + tour_id)
 
 if __name__ == "__main__":

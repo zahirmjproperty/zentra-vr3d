@@ -87,6 +87,11 @@ echo ""
 echo "━━━ Step 3: Build manifest ━━━"
 python3 "$DIR/build_manifest.py"
 
+# Step 4: Generate QR codes
+echo ""
+echo "━━━ Step 4: Generate QR codes ━━━"
+python3 "$DIR/generate_qr.py" --all
+
 # Step 4: Summary
 echo ""
 echo "━━━ Done ━━━"
