@@ -211,6 +211,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--font);background:var(--n
   </div>
 </div>
 
+<script src="/assets/zvr3d-tracker.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
 <script>
 // ── Dynamic tour loader ──
@@ -278,6 +279,11 @@ function loadSceneDirect(sceneId) {
   currentScene = sceneId;
   // Notify floor plan if active
   if (window._fpUpdateScene) setTimeout(() => window._fpUpdateScene(sceneId), 50);
+  // Track scene change
+  if (window.ZVR3D_TRACKER) {
+    const from = currentScene;
+    window.ZVR3D_TRACKER.track('scene', { scene: sceneId, title: '', from: from !== sceneId ? from : undefined });
+  }
   // Fetch tour data from the initial load (stored in closure)
   // Actually we need to access the tour data again. Let me restructure.
   // The simpler approach: pass the data around.

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Analytics — Zentra VR3D</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#071525;--navy-light:#0d1f33;--navy-panel:#11233b;--gold:#C8A96A;--gold-light:#E8CE86;--grad-gold:linear-gradient(135deg,#e8ce86,#c9a227,#9a7a2e);--body:#C7D1DC;--muted:#8C9FB4;--green:#43B02A;--red:#E8776A;--amber:#F0AD4E;--font:'Inter',sans-serif;--font-display:'Manrope','Inter',sans-serif;--radius:12px;--hair:rgba(200,169,106,.2);--hair-solid:rgba(255,255,255,.07);--kaca:rgba(13,31,51,.7)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:radial-gradient(1100px 620px at 12% -8%,rgba(200,169,106,.10),transparent 60%),radial-gradient(900px 520px at 92% 4%,rgba(200,169,106,.05),transparent 55%),var(--navy);color:var(--body);min-height:100vh;line-height:1.6}
+.topbar{position:sticky;top:0;z-index:10;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);background:rgba(7,21,37,.85);border-bottom:1px solid var(--hair);padding:12px 24px;display:flex;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.mark{width:30px;height:30px;border-radius:8px;background:var(--grad-gold);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:14px;color:var(--navy)}
+.brand-text{font-family:var(--font-display);font-weight:800;font-size:14px;letter-spacing:.12em;color:#fff}
+.brand-text em{font-style:normal;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.brand-sub{font-size:11px;color:var(--muted);font-weight:400;margin-left:4px}
+.back-link{margin-left:auto;font-size:13px;color:var(--muted);text-decoration:none}
+.back-link:hover{color:var(--gold-light)}
+.container{max-width:920px;margin:0 auto;padding:32px 24px 80px}
+.page-h{font-family:var(--font-display);font-size:22px;color:#fff;margin-bottom:4px}
+.page-desc{font-size:13px;color:var(--muted);margin-bottom:24px}
+.empty-state{padding:60px 20px;text-align:center}
+.empty-state .icon{font-size:48px;margin-bottom:12px}
+.empty-state h3{font-family:var(--font-display);font-size:18px;color:#fff;margin-bottom:6px}
+.empty-state p{font-size:13px;color:var(--muted);max-width:400px;margin:0 auto 16px}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.kpi-card{background:var(--kaca);border:1px solid var(--hair-solid);border-radius:var(--radius);padding:16px;text-align:center}
+.kpi-card .val{font-family:var(--font-display);font-size:28px;font-weight:800;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.2}
+.kpi-card .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-top:4px}
+.section-title{font-family:var(--font-display);font-size:15px;color:#fff;margin-bottom:12px;margin-top:24px}
+.scene-bar{display:flex;gap:12px;margin-bottom:8px;align-items:center}
+.scene-bar .name{width:130px;font-size:12.5px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:0}
+.scene-bar .track{flex:1;height:24px;background:rgba(0,0,0,.25);border-radius:100px;overflow:hidden;position:relative}
+.scene-bar .fill{height:100%;background:var(--grad-gold);border-radius:100px;transition:width .8s ease}
+.scene-bar .stat{width:80px;text-align:right;font-size:11.5px;color:var(--muted);flex-shrink:0}
+.card{background:var(--kaca);border:1px solid var(--hair-solid);border-radius:var(--radius);padding:16px;margin-bottom:12px}
+.card-row{display:flex;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid var(--hair-solid)}
+.card-row:last-child{border:none}
+.card-row .cl{color:var(--muted)}
+.card-row .cv{color:#fff;font-weight:500}
+.badge{padding:2px 8px;border-radius:100px;font-size:10px;font-weight:700;background:rgba(200,169,106,.12);color:var(--gold-light);display:inline-block}
+.tour-select{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.tour-btn{padding:8px 16px;border-radius:100px;border:1px solid var(--hair-solid);background:var(--kaca);color:var(--body);font-size:12px;cursor:pointer;transition:all .2s}
+.tour-btn:hover{border-color:var(--gold);color:#fff}
+.tour-btn.active{background:var(--grad-gold);color:var(--navy);font-weight:700;border-color:transparent}
+.tour-btn .badge{margin-left:6px;background:rgba(0,0,0,.2);color:var(--muted);font-size:9px}
+.actions{display:flex;gap:8px;margin-top:16px}
+.btn-sm{padding:8px 14px;border-radius:100px;border:1px solid var(--hair-solid);background:transparent;color:var(--muted);font-size:11.5px;cursor:pointer;transition:all .2s}
+.btn-sm:hover{color:var(--red);border-color:var(--red)}
+.transition-list{max-height:240px;overflow-y:auto;font-size:12px}
+.transition-list .tl-item{padding:4px 0;color:var(--muted);border-bottom:1px solid var(--hair-solid)}
+.transition-list .tl-item span{color:var(--gold-light)}
+@media(max-width:640px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.scene-bar .name{width:80px}.scene-bar .stat{width:60px}.container{padding:20px 12px 60px}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="/" class="brand">
+    <div class="mark">Z</div>
+    <div class="brand-text">ZENTRA <em>VR3D</em><span class="brand-sub">Analytics</span></div>
+  </a>
+  <a href="tours.html" class="back-link">← Tours</a>
+</div>
+
+<div class="container">
+  <h1 class="page-h">📊 Tour Analytics</h1>
+  <p class="page-desc">View engagement data for your virtual tours. Data is stored locally per browser.</p>
+
+  <div id="content"></div>
+</div>
+
+<script src="/assets/zvr3d-tracker.js"></script>
+<script>
+(function() {
+  const content = document.getElementById('content');
+
+  function render() {
+    const data = window.ZVR3D_TRACKER ? window.ZVR3D_TRACKER.getData() : {};
+    const tourIds = Object.keys(data);
+
+    if (tourIds.length === 0) {
+      content.innerHTML = '<div class="empty-state"><div class="icon">📭</div><h3>No data yet</h3><p>Tour analytics will appear here after someone views a tour. Open a tour and navigate between scenes to generate data.</p><div class="actions" style="justify-content:center"><a href="tour.html?id=demo-001" class="tour-btn" style="text-decoration:none;color:var(--gold-light);border-color:var(--gold)">Open Demo Tour →</a></div></div>';
+      return;
+    }
+
+    // Tour selector
+    let html = '<div class="tour-select">';
+    tourIds.forEach(id => {
+      const t = data[id];
+      html += `<button class="tour-btn${id === selected ? ' active' : ''}" onclick="selectTour('${id}')">${id}<span class="badge">${t.views || 0}</span></button>`;
+    });
+    html += '</div>';
+
+    // Selected tour data
+    const t = data[selected];
+    if (!t) return;
+
+    const totalTime = t.totalTime || 0;
+    const avgTime = t.views > 0 ? Math.round(totalTime / t.views / 1000) : 0;
+    const uniqueCount = t.uniqueSessions ? t.uniqueSessions.length : 0;
+    const sceneNames = Object.keys(t.scenes || {});
+    const topScene = sceneNames.length > 0 ? sceneNames.reduce((a,b) => (t.scenes[a].views > t.scenes[b].views ? a : b)) : '—';
+
+    // KPIs
+    html += '<div class="kpi-grid">';
+    html += `<div class="kpi-card"><div class="val">${t.views || 0}</div><div class="lbl">Total Views</div></div>`;
+    html += `<div class="kpi-card"><div class="val">${uniqueCount}</div><div class="lbl">Unique Sessions</div></div>`;
+    html += `<div class="kpi-card"><div class="val">${formatTime(totalTime)}</div><div class="lbl">Total Time</div></div>`;
+    html += `<div class="kpi-card"><div class="val">${avgTime}s</div><div class="lbl">Avg. View Time</div></div>`;
+    html += '</div>';
+
+    // Scenes breakdown
+    if (sceneNames.length > 0) {
+      html += '<div class="section-title">Scene Performance</div>';
+      const maxViews = Math.max(...sceneNames.map(s => t.scenes[s].views || 0));
+      sceneNames.forEach(s => {
+        const sc = t.scenes[s];
+        const pct = maxViews > 0 ? (sc.views / maxViews) * 100 : 0;
+        const timeS = Math.round((sc.totalTimeMs || 0) / 1000);
+        html += `<div class="scene-bar"><span class="name">${sc.title || s}</span><div class="track"><div class="fill" style="width:${pct}%"></div></div><span class="stat">${sc.views} views · ${timeS}s</span></div>`;
+      });
+    }
+
+    // Recent transitions
+    const trans = t.transitions || [];
+    if (trans.length > 0) {
+      html += '<div class="section-title">Recent Navigation</div>';
+      html += '<div class="card"><div class="transition-list">';
+      const recent = trans.slice(-10).reverse();
+      recent.forEach(tr => {
+        const d = new Date(tr.time);
+        const timeStr = d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+        html += `<div class="tl-item">${timeStr} · <span>${tr.from || 'entry'}</span> → <span>${tr.to}</span></div>`;
+      });
+      html += '</div></div>';
+    }
+
+    // Details
+    html += '<div class="section-title">Details</div>';
+    html += '<div class="card">';
+    html += `<div class="card-row"><span class="cl">Tour ID</span><span class="cv">${selected}</span></div>`;
+    html += `<div class="card-row"><span class="cl">First Visit</span><span class="cv">${t.created ? new Date(t.created).toLocaleDateString() : '—'}</span></div>`;
+    html += `<div class="card-row"><span class="cl">Last Visit</span><span class="cv">${t.lastVisit ? new Date(t.lastVisit).toLocaleString() : '—'}</span></div>`;
+    html += `<div class="card-row"><span class="cl">Scenes</span><span class="cv">${sceneNames.length}</span></div>`;
+    html += `<div class="card-row"><span class="cl">Top Scene</span><span class="cv">${topScene}</span></div>`;
+    html += '</div>';
+
+    // Actions
+    html += '<div class="actions">';
+    html += `<button class="btn-sm" onclick="window.ZVR3D_TRACKER && window.ZVR3D_TRACKER.clear('${selected}') && render()">🗑 Clear This Tour</button>`;
+    html += `<button class="btn-sm" onclick="window.ZVR3D_TRACKER && window.ZVR3D_TRACKER.clear() && render()">🗑 Clear All Data</button>`;
+    html += '</div>';
+
+    content.innerHTML = html;
+  }
+
+  let selected = null;
+
+  window.selectTour = function(id) {
+    selected = id;
+    render();
+  };
+
+  function formatTime(ms) {
+    if (ms < 60000) return Math.round(ms / 1000) + 's';
+    const min = Math.floor(ms / 60000);
+    const sec = Math.round((ms % 60000) / 1000);
+    return min + 'm ' + sec + 's';
+  }
+
+  // Auto-select first tour
+  const data = window.ZVR3D_TRACKER ? window.ZVR3D_TRACKER.getData() : {};
+  const keys = Object.keys(data);
+  if (keys.length > 0) selected = keys[0];
+
+  render();
+})();
+</script>
+</body>
+</html>
