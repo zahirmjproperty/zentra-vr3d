@@ -75,6 +75,12 @@ def main():
     print(f"   URL: /tour.html?id={tour_id}")
     print(f"   Scenes: {len(scenes)}")
     print()
+
+    # Auto-register in manifest
+    from build_manifest import build as build_manifest
+    build_manifest()
+    print()
+
     print("To view: https://vr3d.zentrapropertygroup.com/tour.html?id=" + tour_id)
 
 if __name__ == "__main__":
