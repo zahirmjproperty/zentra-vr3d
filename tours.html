@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Virtual Tours — Zentra VR3D</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#071525;--navy-light:#0d1f33;--gold:#C8A96A;--gold-light:#E8CE86;--body:#B0C4D6;--muted:#6F8FA5;--glass:rgba(7,21,37,.78);--hair:rgba(200,169,106,.15);--panel:rgba(18,40,63,.65)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:radial-gradient(1100px 620px at 12% -8%,rgba(201,162,39,.12),transparent 60%),radial-gradient(900px 520px at 92% 4%,rgba(201,162,39,.06),transparent 55%),var(--navy);color:var(--body);min-height:100vh}
+.top{position:sticky;top:0;z-index:6;backdrop-filter:blur(14px);background:rgba(7,21,37,.78);border-bottom:1px solid var(--hair)}
+.top .in{max-width:1120px;margin:0 auto;padding:14px 22px;display:flex;align-items:center;justify-content:space-between}
+.brand{font-family:'Manrope',sans-serif;font-weight:800;letter-spacing:.16em;font-size:13.5px;color:#fff;text-decoration:none}
+.brand em{font-style:normal;color:var(--gold-light)}
+.top a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;padding:6px 14px;border-radius:100px;transition:all .2s}
+.top a:hover{color:#fff;background:rgba(200,169,106,.06)}
+.wrap{max-width:1120px;margin:0 auto;padding:40px 22px 60px}
+h1{font-family:'Manrope',sans-serif;font-size:28px;font-weight:800;color:#fff;margin-bottom:6px}
+.sub{font-size:14px;color:var(--muted);margin-bottom:40px}
+
+/* Card grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+.card{background:var(--panel);border:1px solid var(--hair);border-radius:14px;overflow:hidden;transition:all .3s;cursor:pointer;text-decoration:none;color:inherit}
+.card:hover{border-color:rgba(200,169,106,.35);transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.3)}
+.card-thumb{width:100%;aspect-ratio:16/9;background:var(--navy-light);overflow:hidden}
+.card-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.card:hover .card-thumb img{transform:scale(1.05)}
+.card-body{padding:16px 18px}
+.card-body h3{font-family:'Manrope',sans-serif;font-size:16px;font-weight:700;color:#fff;margin-bottom:4px}
+.card-body p{font-size:13px;color:var(--muted);line-height:1.4;margin-bottom:10px}
+.card-meta{display:flex;gap:12px;font-size:11.5px;color:var(--muted)}
+.card-meta span{display:flex;align-items:center;gap:4px}
+
+/* Empty state */
+.empty{text-align:center;padding:60px 20px}
+.empty h2{font-family:'Manrope',sans-serif;font-size:20px;color:var(--gold);margin-bottom:8px}
+.empty p{font-size:14px;color:var(--muted)}
+.empty code{display:inline-block;margin-top:16px;padding:10px 18px;background:var(--panel);border:1px solid var(--hair);border-radius:8px;font-size:13px;color:var(--gold)}
+
+/* Badge */
+.badge{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;padding:3px 9px;border-radius:100px;background:rgba(200,169,106,.15);color:var(--gold-light)}
+
+@media(max-width:640px){
+  .wrap{padding:24px 16px 40px}
+  h1{font-size:22px}
+  .grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="in">
+    <a href="/" class="brand"><span>ZENTRA <em>VR3D</em></span></a>
+    <a href="/">Home</a>
+  </div>
+</div>
+<div class="wrap">
+  <h1>Virtual Tours</h1>
+  <p class="sub">Browse available 360° property tours</p>
+  <div class="grid" id="tourGrid"></div>
+</div>
+
+<script>
+async function loadTours() {
+  const grid = document.getElementById('tourGrid');
+  grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted)"><div class="spinner" style="width:28px;height:28px;border:2px solid rgba(200,169,106,.1);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px"></div><p style="font-size:13px">Loading tours…</p></div><style>.spinner{display:block}@keyframes spin{to{transform:rotate(360deg)}}</style>';
+
+  // For demo, we list known tours from a manifest
+  // In Phase 2, this will be auto-generated
+  const known = ['demo-001'];
+  const tours = [];
+
+  for (const id of known) {
+    try {
+      const res = await fetch('/tours/' + id + '.json');
+      if (!res.ok) continue;
+      const t = await res.json();
+      tours.push(t);
+    } catch(e) {}
+  }
+
+  if (tours.length === 0) {
+    grid.innerHTML = '<div class="empty"><h2>No tours yet</h2><p>Create your first tour with the stitch pipeline.</p><code>python3 stitch.py ./photos/ --output assets/panorama.jpg<br>python3 add_tour.py assets/panorama.jpg --name "My Property"</code></div>';
+    return;
+  }
+
+  grid.innerHTML = tours.map(t => {
+    const sceneCount = (t.scenes || []).length;
+    const thumb = (t.scenes && t.scenes[0]) ? t.scenes[0].panorama : (t.thumb || '');
+    return '<a href="tour.html?id=' + t.id + '" class="card">' +
+      '<div class="card-thumb"><img src="' + thumb + '" alt="" loading="lazy"></div>' +
+      '<div class="card-body">' +
+      '<h3>' + t.title + '</h3>' +
+      '<p>' + (t.description || '') + '</p>' +
+      '<div class="card-meta">' +
+      '<span>🔄 ' + sceneCount + ' scene' + (sceneCount > 1 ? 's' : '') + '</span>' +
+      '<span>📅 ' + (t.created || '') + '</span>' +
+      '</div></div></a>';
+  }).join('');
+}
+
+loadTours();
+</script>
+</body>
+</html>

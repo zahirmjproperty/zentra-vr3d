@@ -1,0 +1,45 @@
+{
+  "id": "demo-001",
+  "title": "Contoh Unit — Demo Tour",
+  "property": "Demo Property",
+  "description": "A sample virtual tour showcasing Zentra VR3D capabilities. Navigate between living room and kitchen.",
+  "thumb": "/assets/panorama-demo.jpg",
+  "created": "2026-09-26",
+  "scenes": [
+    {
+      "id": "living",
+      "title": "Living Room",
+      "description": "Spacious living area with modern furnishings",
+      "panorama": "/assets/panorama-demo.jpg",
+      "initial": {"pitch": -5, "yaw": 0, "hfov": 100},
+      "hotSpots": [
+        {
+          "pitch": -4, "yaw": 95,
+          "type": "scene", "text": "Kitchen",
+          "sceneId": "kitchen",
+          "targetYaw": 180, "targetPitch": -5
+        },
+        {
+          "pitch": -4, "yaw": -150,
+          "type": "info", "text": "Info Unit",
+          "textHTML": "<p><strong>Studio Apartment</strong></p><p>500 sqft · Fully furnished<br>Level 15 · City view</p>"
+        }
+      ]
+    },
+    {
+      "id": "kitchen",
+      "title": "Kitchen",
+      "description": "Modern kitchen with island and warm lighting",
+      "panorama": "/assets/panorama-kitchen.jpg",
+      "initial": {"pitch": -5, "yaw": 180, "hfov": 100},
+      "hotSpots": [
+        {
+          "pitch": -4, "yaw": -80,
+          "type": "scene", "text": "Back to Living Room",
+          "sceneId": "living",
+          "targetYaw": 90, "targetPitch": -5
+        }
+      ]
+    }
+  ]
+}
