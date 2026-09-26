@@ -86,6 +86,29 @@ html,body{height:100%;overflow:hidden;font-family:var(--font);background:var(--n
   #ui{padding:28px 14px 14px}
   .scene-btn{padding:6px 12px;font-size:11.5px}
 }
+
+/* Embed modal */
+.modal-overlay{position:fixed;inset:0;z-index:2000;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.6);backdrop-filter:blur(4px)}
+.modal-overlay.open{display:flex}
+.modal{background:var(--navy-light);border:1px solid var(--hair);border-radius:16px;width:540px;max-width:94vw;max-height:90vh;overflow-y:auto;padding:24px}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.modal-header h3{font-family:var(--font-display);color:#fff;font-size:16px;font-weight:700}
+.modal-close{background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;padding:4px 8px;border-radius:6px}
+.modal-close:hover{color:#fff;background:rgba(200,169,106,.1)}
+.modal-desc{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.embed-options{display:flex;gap:16px;margin-bottom:14px}
+.embed-options label{font-size:12.5px;color:var(--body);cursor:pointer;display:flex;align-items:center;gap:6px}
+.embed-options input[type=radio]{accent-color:var(--gold)}
+.code-block{display:flex;background:rgba(0,0,0,.3);border:1px solid var(--hair);border-radius:10px;overflow:hidden}
+.code-block code{flex:1;padding:12px 14px;font-size:11.5px;color:var(--gold-light);font-family:'SF Mono',Consolas,monospace;white-space:pre-wrap;word-break:break-all;line-height:1.5}
+.copy-btn{padding:0 16px;background:var(--gold);color:var(--navy);border:none;font-weight:700;font-size:12px;cursor:pointer;transition:all .2s;font-family:var(--font)}
+.copy-btn:hover{background:var(--gold-light)}
+.copy-btn.copied{background:#43B02A;color:#fff}
+.embed-preview{margin-top:14px}
+.preview-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+#embedPreviewFrame{width:100%;height:0;padding-bottom:56.25%;position:relative;background:rgba(0,0,0,.2);border-radius:8px;overflow:hidden}
+#embedPreviewFrame iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
+.modal-foot{font-size:11px;color:var(--muted);margin-top:10px;text-align:center}
 </style>
 </head>
 <body>
@@ -105,6 +128,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--font);background:var(--n
     <a href="#" id="togglePanelBtn">Scenes</a>
     <a href="#" onclick="document.querySelector('#pano').requestFullscreen()">Fullscreen</a>
     <a href="qr.html">QR</a>
+    <a href="#" id="embedBtn">Embed</a>
   </div>
 </div>
 
@@ -123,6 +147,30 @@ html,body{height:100%;overflow:hidden;font-family:var(--font);background:var(--n
 <div id="panel">
   <h3>Scenes</h3>
   <div id="sceneList"></div>
+</div>
+
+<!-- Embed modal -->
+<div id="embedModal" class="modal-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Embed This Tour</h3>
+      <button class="modal-close" id="embedClose">&times;</button>
+    </div>
+    <p class="modal-desc">Copy and paste this code into any website to embed the virtual tour.</p>
+    <div class="embed-options">
+      <label><input type="radio" name="embedSize" value="responsive" checked> Responsive</label>
+      <label><input type="radio" name="embedSize" value="fixed"> Fixed 800×600</label>
+    </div>
+    <div class="code-block">
+      <code id="embedCode"></code>
+      <button class="copy-btn" id="copyEmbed">Copy</button>
+    </div>
+    <div class="embed-preview">
+      <p class="preview-label">Preview</p>
+      <div id="embedPreviewFrame"></div>
+    </div>
+    <p class="modal-foot">The viewer will match your site's width automatically.</p>
+  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
@@ -336,6 +384,56 @@ function loadSceneDirect(sceneId) {
   document.addEventListener('touchstart', function() {
     document.getElementById('ui').classList.toggle('hidden');
   });
+
+  // ── Embed modal ──
+  document.getElementById('embedBtn').onclick = function(e) {
+    e.preventDefault();
+    const modal = document.getElementById('embedModal');
+    const code = document.getElementById('embedCode');
+    const preview = document.getElementById('embedPreviewFrame');
+    const size = document.querySelector('input[name="embedSize"]:checked').value;
+    const tourUrl = window.location.origin + '/embed.html?id=' + tourId;
+    
+    if (size === 'responsive') {
+      code.textContent = '<iframe src="' + tourUrl + '" \n  width="100%" height="600" \n  frameborder="0" allowfullscreen></iframe>';
+      preview.innerHTML = '<iframe src="' + tourUrl + '" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>';
+    } else {
+      code.textContent = '<iframe src="' + tourUrl + '" \n  width="800" height="600" \n  frameborder="0" allowfullscreen></iframe>';
+      preview.innerHTML = '<iframe src="' + tourUrl + '" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>';
+    }
+    
+    modal.classList.add('open');
+  };
+  
+  document.getElementById('embedClose').onclick = function() {
+    document.getElementById('embedModal').classList.remove('open');
+    document.getElementById('embedPreviewFrame').innerHTML = '';
+  };
+  
+  document.querySelectorAll('input[name="embedSize"]').forEach(r => {
+    r.addEventListener('change', function() {
+      // Trigger click on embedBtn to regenerate
+      document.getElementById('embedBtn').click();
+      document.getElementById('embedModal').classList.add('open');
+    });
+  });
+  
+  document.getElementById('copyEmbed').onclick = function() {
+    const code = document.getElementById('embedCode');
+    navigator.clipboard.writeText(code.textContent).then(() => {
+      this.textContent = 'Copied!';
+      this.classList.add('copied');
+      setTimeout(() => { this.textContent = 'Copy'; this.classList.remove('copied'); }, 2000);
+    });
+  };
+  
+  // Close modal on overlay click
+  document.getElementById('embedModal').onclick = function(e) {
+    if (e.target === this) {
+      this.classList.remove('open');
+      document.getElementById('embedPreviewFrame').innerHTML = '';
+    }
+  };
 
 })();
 </script>
