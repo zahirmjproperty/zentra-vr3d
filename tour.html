@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Zentra VR3D — Virtual Tour</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #071525;
+  --navy-light: #0d1f33;
+  --gold: #C8A96A;
+  --gold-light: #dfc58a;
+  --cyan: #5bc0de;
+  --text: #e8edf2;
+  --text-dim: #8a9aa8;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --font: 'Inter', system-ui, sans-serif;
+  --font-display: 'Manrope', var(--font);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;font-family:var(--font);background:var(--navy);color:var(--text)}
+
+/* Pannellum overrides — match ZPG theme */
+.pnlm-about-msg{display:none!important}
+.pnlm-compass{filter:hue-rotate(320deg) saturate(1.5)}
+.pnlm-hotspot-list{font-family:var(--font)!important}
+
+/* Tour UI overlay */
+#ui{
+  position:fixed;bottom:0;left:0;right:0;
+  z-index:999;
+  background:linear-gradient(transparent, rgba(7,21,37,0.85) 40%);
+  padding:40px 24px 20px;
+  pointer-events:none;
+  transition:opacity .4s;
+}
+#ui.hidden{opacity:0;pointer-events:none}
+#ui > *{pointer-events:auto}
+.ui-bar{
+  max-width:800px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:16px;flex-wrap:wrap;
+}
+.scene-info{flex:1;min-width:200px}
+.scene-info .prop-name{font-family:var(--font-display);font-size:16px;font-weight:700}
+.scene-info .scene-name{font-size:13px;color:var(--text-dim);margin-top:2px}
+.scene-nav{display:flex;gap:8px}
+.scene-btn{
+  padding:8px 18px;border-radius:100px;
+  font-size:13px;font-weight:600;
+  border:1px solid rgba(200,169,106,0.2);
+  background:rgba(7,21,37,0.5);
+  color:var(--text-dim);cursor:pointer;
+  backdrop-filter:blur(8px);
+  transition:all .2s;
+}
+.scene-btn:hover{border-color:var(--gold);color:var(--text);background:rgba(200,169,106,0.1)}
+.scene-btn.active{border-color:var(--gold);color:var(--gold);background:rgba(200,169,106,0.15)}
+
+/* Top bar */
+#topbar{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  background:rgba(7,21,37,0.6);backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(200,169,106,0.06);
+  padding:12px 20px;display:flex;align-items:center;justify-content:space-between;
+}
+.brand{
+  display:flex;align-items:center;gap:10px;
+  font-family:var(--font-display);font-weight:700;font-size:16px;letter-spacing:0.3px;
+}
+.brand .mark{width:28px;height:28px;background:var(--gold);border-radius:4px;display:flex;align-items:center;justify-content:center;color:var(--navy);font-weight:800;font-size:14px}
+.brand em{color:var(--gold);font-style:normal}
+#topbar .actions{display:flex;gap:8px;align-items:center}
+#topbar a{
+  color:var(--text-dim);text-decoration:none;font-size:13px;font-weight:500;padding:6px 14px;border-radius:100px;transition:all .2s;border:1px solid transparent;
+}
+#topbar a:hover{color:var(--text);background:rgba(200,169,106,0.06)}
+
+/* Loading */
+#loading{
+  position:fixed;inset:0;z-index:1000;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:20px;background:var(--navy);
+  transition:opacity .5s;
+}
+#loading.hidden{opacity:0;pointer-events:none}
+.spinner{width:40px;height:40px;border:3px solid rgba(200,169,106,0.1);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#loading p{font-size:14px;color:var(--text-dim)}
+
+/* Scene list panel */
+#panel{
+  position:fixed;top:60px;right:0;z-index:998;
+  width:280px;max-height:calc(100vh - 80px);overflow-y:auto;
+  background:rgba(7,21,37,0.92);backdrop-filter:blur(16px);
+  border-left:1px solid rgba(200,169,106,0.06);
+  border-bottom:1px solid rgba(200,169,106,0.06);
+  border-radius:0 0 0 var(--radius);
+  padding:16px;
+  transform:translateX(100%);transition:transform .3s;
+}
+#panel.open{transform:translateX(0)}
+#panel h3{font-size:13px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.scene-item{
+  display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:var(--radius-sm);
+  cursor:pointer;transition:all .2s;margin-bottom:4px;
+}
+.scene-item:hover{background:rgba(200,169,106,0.06)}
+.scene-item.active{background:rgba(200,169,106,0.1);border-left:2px solid var(--gold)}
+.scene-item .thumb{width:48px;height:48px;border-radius:6px;background:var(--navy-light);overflow:hidden;flex-shrink:0}
+.scene-item .thumb img{width:100%;height:100%;object-fit:cover}
+.scene-item .label{flex:1}
+.scene-item .title{font-size:14px;font-weight:600}
+.scene-item .sub{font-size:12px;color:var(--text-dim);margin-top:2px}
+.scene-item .check{color:var(--gold);font-size:14px}
+
+/* Hotspot custom styling */
+.custom-hotspot{
+  width:40px;height:40px;
+  background:rgba(200,169,106,0.2);
+  border:2px solid var(--gold);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all .3s;
+  position:relative;
+}
+.custom-hotspot::after{
+  content:'';position:absolute;
+  width:12px;height:12px;
+  background:var(--gold);
+  border-radius:50%;
+  animation:pulse-dot 2s infinite;
+}
+@keyframes pulse-dot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.3);opacity:0.6}}
+.custom-hotspot:hover{background:rgba(200,169,106,0.4);transform:scale(1.1)}
+
+/* Info hotspot */
+.info-hotspot{
+  width:28px;height:28px;
+  background:rgba(91,192,222,0.25);
+  border:2px solid var(--cyan);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:700;color:var(--cyan);
+  cursor:pointer;transition:all .2s;
+}
+.info-hotspot:hover{background:rgba(91,192,222,0.4);transform:scale(1.1)}
+
+/* Fullscreen button — native */
+#pano{width:100%;height:100%}
+
+@media(max-width:768px){
+  #panel{width:240px}
+  .scene-info .prop-name{font-size:14px}
+  #topbar{padding:10px 14px}
+  .brand{font-size:14px}
+  .brand .mark{width:24px;height:24px;font-size:12px}
+}
+</style>
+</head>
+<body>
+
+<!-- Loading screen -->
+<div id="loading">
+  <div class="spinner"></div>
+  <p>Loading virtual tour...</p>
+</div>
+
+<!-- Top bar -->
+<div id="topbar">
+  <a href="/" style="text-decoration:none">
+    <div class="brand">
+      <div class="mark">Z</div>
+      <span>ZENTRA <em>VR3D</em></span>
+    </div>
+  </a>
+  <div class="actions">
+    <a href="#" id="togglePanel" onclick="togglePanel()">Scenes</a>
+    <a href="#" onclick="document.getElementById('pano').requestFullscreen()">Fullscreen</a>
+  </div>
+</div>
+
+<!-- Pannellum container -->
+<div id="pano"></div>
+
+<!-- Bottom UI -->
+<div id="ui">
+  <div class="ui-bar">
+    <div class="scene-info">
+      <div class="prop-name" id="propName">Demo Property</div>
+      <div class="scene-name" id="sceneName">Loading...</div>
+    </div>
+    <div class="scene-nav" id="sceneNav"></div>
+  </div>
+</div>
+
+<!-- Scene list panel -->
+<div id="panel">
+  <h3>Scenes</h3>
+  <div id="sceneList"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+<script>
+// ===== TOUR DATA =====
+// In production, this loads from a JSON file per property
+const TOUR = {
+  "id": "demo-001",
+  "title": "Zentra VR3D Demo",
+  "defaultScene": "living",
+  "scenes": {
+    "living": {
+      "title": "Living Room",
+      "description": "Spacious living area with modern furnishings",
+      "panorama": "assets/panorama-demo.jpg",
+      "type": "equirectangular",
+      "autoLoad": true,
+      "compass": true,
+      "northOffset": 0,
+      "hotSpots": [
+        {
+          "pitch": -5, "yaw": 120,
+          "type": "scene",
+          "text": "Go to Kitchen",
+          "sceneId": "kitchen",
+          "targetYaw": 140,
+          "targetPitch": -2,
+          "cssClass": "custom-hotspot"
+        },
+        {
+          "pitch": -10, "yaw": 45,
+          "type": "info",
+          "text": "Gold-accented living area with 12ft ceiling",
+          "cssClass": "info-hotspot"
+        }
+      ]
+    },
+    "kitchen": {
+      "title": "Kitchen",
+      "description": "Modern kitchen with island and warm lighting",
+      "panorama": "assets/panorama-kitchen.jpg",
+      "type": "equirectangular",
+      "compass": true,
+      "northOffset": 0,
+      "hotSpots": [
+        {
+          "pitch": -5, "yaw": -130,
+          "type": "scene",
+          "text": "Back to Living Room",
+          "sceneId": "living",
+          "targetYaw": -55,
+          "targetPitch": -5,
+          "cssClass": "custom-hotspot"
+        }
+      ]
+    }
+  }
+};
+
+// ===== VIEWER =====
+let viewer;
+const sceneKeys = Object.keys(TOUR.scenes);
+
+function loadScene(sceneId) {
+  const scene = TOUR.scenes[sceneId];
+  if (!scene) return;
+
+  // Update UI
+  document.getElementById('sceneName').textContent = scene.title;
+  document.getElementById('propName').textContent = TOUR.title;
+
+  // Update scene buttons
+  document.querySelectorAll('.scene-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.scene === sceneId);
+  });
+
+  // Update panel
+  document.querySelectorAll('.scene-item').forEach(item => {
+    item.classList.toggle('active', item.dataset.scene === sceneId);
+  });
+
+  // Load into Pannellum
+  if (!viewer) {
+    viewer = pannellum.viewer('pano', {
+      type: scene.type || 'equirectangular',
+      panorama: scene.panorama,
+      autoLoad: true,
+      compass: true,
+      northOffset: scene.northOffset || 0,
+      pitch: scene.pitch || 0,
+      yaw: scene.yaw || 0,
+      hfov: scene.hfov || 100,
+      minHfov: 50,
+      maxHfov: 120,
+      hotSpots: scene.hotSpots || [],
+      hotSpotDebug: false,
+      sceneFadeDuration: 600,
+      showZoomCtrl: true,
+      showFullscreenCtrl: false,
+      keyboardZoom: true,
+      mouseZoom: true,
+      autoRotate: -2,
+      autoRotateInactivityDelay: 60000,
+      onLoad: () => {
+        document.getElementById('loading').classList.add('hidden');
+      },
+    });
+  } else {
+    viewer.loadScene(sceneId);
+  }
+
+  // Hide UI after inactivity
+  clearTimeout(window.uiTimer);
+  document.getElementById('ui').classList.remove('hidden');
+}
+
+// Hotspot click handler — Pannellum fires scene change via config
+// but we need to intercept info hotspots and custom scene transitions
+pannellum.api = {};
+pannellum.api.loadScene = function(id) { loadScene(id); };
+
+// Build scene navigation
+function buildUI() {
+  // Bottom bar buttons
+  const nav = document.getElementById('sceneNav');
+  sceneKeys.forEach(id => {
+    const s = TOUR.scenes[id];
+    const btn = document.createElement('button');
+    btn.className = 'scene-btn';
+    btn.dataset.scene = id;
+    btn.textContent = s.title;
+    btn.onclick = () => loadScene(id);
+    nav.appendChild(btn);
+  });
+
+  // Panel scene list
+  const list = document.getElementById('sceneList');
+  sceneKeys.forEach(id => {
+    const s = TOUR.scenes[id];
+    const item = document.createElement('div');
+    item.className = 'scene-item';
+    item.dataset.scene = id;
+    item.onclick = () => loadScene(id);
+    item.innerHTML = `
+      <div class="thumb"><img src="${s.panorama}" alt="${s.title}" loading="lazy"></div>
+      <div class="label">
+        <div class="title">${s.title}</div>
+        <div class="sub">${s.description || ''}</div>
+      </div>
+    `;
+    list.appendChild(item);
+  });
+}
+
+// Panel toggle
+function togglePanel() {
+  document.getElementById('panel').classList.toggle('open');
+}
+
+// Click outside panel to close
+document.addEventListener('click', (e) => {
+  const panel = document.getElementById('panel');
+  if (panel.classList.contains('open') && !panel.contains(e.target) && e.target.id !== 'togglePanel') {
+    panel.classList.remove('open');
+  }
+});
+
+// Auto-hide UI on mouse idle
+let uiTimer;
+document.addEventListener('mousemove', () => {
+  document.getElementById('ui').classList.remove('hidden');
+  document.getElementById('topbar').style.opacity = '1';
+  clearTimeout(uiTimer);
+  uiTimer = setTimeout(() => {
+    document.getElementById('ui').classList.add('hidden');
+    document.getElementById('topbar').style.opacity = '0';
+  }, 4000);
+});
+document.addEventListener('touchstart', () => {
+  document.getElementById('ui').classList.toggle('hidden');
+});
+
+// Init
+buildUI();
+loadScene(TOUR.defaultScene);
+
+// Show topbar on hover near top
+document.addEventListener('mousemove', (e) => {
+  if (e.clientY < 60) {
+    document.getElementById('topbar').style.opacity = '1';
+    clearTimeout(window.topTimer);
+  } else if (uiTimer) {
+    // Don't interfere with the main auto-hide
+  }
+});
+</script>
+</body>
+</html>
