@@ -5,6 +5,7 @@
   "description": "A sample virtual tour showcasing Zentra VR3D capabilities. Navigate between living room and kitchen.",
   "thumb": "/assets/panorama-demo.jpg",
   "created": "2026-09-26",
+  "floorplan": "/assets/floorplan-demo.svg",
   "scenes": [
     {
       "id": "living",
@@ -12,6 +13,7 @@
       "description": "Spacious living area with modern furnishings",
       "panorama": "/assets/panorama-demo.jpg",
       "initial": {"pitch": -5, "yaw": 0, "hfov": 100},
+      "position": {"x": 115, "y": 100},
       "hotSpots": [
         {
           "pitch": -4, "yaw": 95,
@@ -32,6 +34,7 @@
       "description": "Modern kitchen with island and warm lighting",
       "panorama": "/assets/panorama-kitchen.jpg",
       "initial": {"pitch": -5, "yaw": 180, "hfov": 100},
+      "position": {"x": 305, "y": 85},
       "hotSpots": [
         {
           "pitch": -4, "yaw": -80,

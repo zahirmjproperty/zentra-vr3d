@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 280">
+  <defs>
+    <pattern id="wall" patternUnits="userSpaceOnUse" width="4" height="4"><rect width="4" height="4" fill="#1a2a3a"/><rect width="2" height="2" fill="#0f1a28"/></pattern>
+    <pattern id="floor" patternUnits="userSpaceOnUse" width="20" height="20"><rect width="20" height="20" fill="#1e3044"/><rect width="10" height="10" fill="#1a2a3e"/></pattern>
+    <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="rgba(200,169,106,.08)"/><stop offset="100%" stop-color="rgba(200,169,106,.02)"/></linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="280" fill="#0f1a28"/>
+  
+  <!-- Floor -->
+  <rect x="20" y="20" width="360" height="240" fill="url(#floor)" rx="4"/>
+  
+  <!-- Outer walls -->
+  <rect x="14" y="14" width="372" height="252" fill="none" stroke="#2a4058" stroke-width="3" rx="6"/>
+  
+  <!-- Living Room area (left) -->
+  <rect x="20" y="20" width="210" height="240" fill="url(#glass)" rx="4"/>
+  <line x1="230" y1="20" x2="230" y2="140" stroke="#2a4058" stroke-width="2.5"/>
+  <line x1="230" y1="140" x2="230" y2="260" stroke="#2a4058" stroke-width="2.5"/>
+  
+  <!-- Living Room label -->
+  <text x="120" y="160" fill="rgba(200,169,106,.5)" font-family="system-ui,sans-serif" font-size="20" font-weight="300" text-anchor="middle" letter-spacing="2">LIVING</text>
+  <text x="120" y="182" fill="rgba(200,169,106,.3)" font-family="system-ui,sans-serif" font-size="11" text-anchor="middle">4.8m × 6.2m</text>
+  
+  <!-- Couch mockup -->
+  <rect x="40" y="200" width="60" height="30" rx="4" fill="rgba(200,169,106,.08)" stroke="rgba(200,169,106,.15)" stroke-width="1"/>
+  <rect x="50" y="206" width="12" height="18" rx="2" fill="rgba(200,169,106,.04)"/>
+  <rect x="78" y="206" width="12" height="18" rx="2" fill="rgba(200,169,106,.04)"/>
+  
+  <!-- Kitchen area (right) -->
+  <rect x="236" y="20" width="144" height="136" fill="url(#glass)" rx="4"/>
+  <text x="308" y="100" fill="rgba(200,169,106,.5)" font-family="system-ui,sans-serif" font-size="20" font-weight="300" text-anchor="middle" letter-spacing="2">KITCHEN</text>
+  <text x="308" y="122" fill="rgba(200,169,106,.3)" font-family="system-ui,sans-serif" font-size="11" text-anchor="middle">3.2m × 4.0m</text>
+  
+  <!-- Kitchen counter -->
+  <rect x="250" y="40" width="60" height="12" rx="3" fill="rgba(200,169,106,.06)" stroke="rgba(200,169,106,.1)" stroke-width="1"/>
+  <rect x="320" y="40" width="45" height="12" rx="3" fill="rgba(200,169,106,.06)" stroke="rgba(200,169,106,.1)" stroke-width="1"/>
+  
+  <!-- Doorway between rooms -->
+  <rect x="226" y="150" width="8" height="30" rx="1" fill="#0f1a28" stroke="#2a4058" stroke-width="1.5"/>
+  
+  <!-- Main entrance -->
+  <rect x="275" y="250" width="22" height="10" rx="1" fill="#0f1a28" stroke="#2a4058" stroke-width="1.5"/>
+  <text x="286" y="268" fill="rgba(200,169,106,.25)" font-family="system-ui,sans-serif" font-size="7" font-weight="600" text-anchor="middle">ENTRANCE</text>
+  
+  <!-- Window symbols -->
+  <rect x="24" y="110" width="40" height="6" rx="1" fill="rgba(67,176,42,.12)"/>
+  <rect x="24" y="126" width="40" height="6" rx="1" fill="rgba(67,176,42,.12)"/>
+  <rect x="356" y="60" width="6" height="30" rx="1" fill="rgba(67,176,42,.12)"/>
+  <rect x="340" y="60" width="6" height="30" rx="1" fill="rgba(67,176,42,.12)"/>
+  
+  <!-- Balcony door -->
+  <rect x="40" y="24" width="12" height="40" rx="1" fill="rgba(67,176,42,.06)" stroke="rgba(67,176,42,.15)" stroke-width="1" stroke-dasharray="2 2"/>
+  
+  <!-- Compass -->
+  <circle cx="370" cy="256" r="8" fill="none" stroke="rgba(200,169,106,.2)" stroke-width="1"/>
+  <polygon points="370,249 366,259 374,259" fill="rgba(200,169,106,.3)"/>
+  <text x="370" y="246" fill="rgba(200,169,106,.3)" font-family="system-ui,sans-serif" font-size="6" text-anchor="middle" font-weight="600">N</text>
+  
+  <!-- Scale bar -->
+  <line x1="20" y1="272" x2="60" y2="272" stroke="rgba(200,169,106,.2)" stroke-width="1"/>
+  <line x1="20" y1="269" x2="20" y2="275" stroke="rgba(200,169,106,.2)" stroke-width="1"/>
+  <line x1="60" y1="269" x2="60" y2="275" stroke="rgba(200,169,106,.2)" stroke-width="1"/>
+  <text x="40" y="268" fill="rgba(200,169,106,.2)" font-family="system-ui,sans-serif" font-size="6" text-anchor="middle">2m</text>
+</svg>

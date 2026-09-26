@@ -109,6 +109,26 @@ html,body{height:100%;overflow:hidden;font-family:var(--font);background:var(--n
 #embedPreviewFrame{width:100%;height:0;padding-bottom:56.25%;position:relative;background:rgba(0,0,0,.2);border-radius:8px;overflow:hidden}
 #embedPreviewFrame iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
 .modal-foot{font-size:11px;color:var(--muted);margin-top:10px;text-align:center}
+
+/* Floor plan panel */
+.panel-floorplan{position:fixed;top:0;right:0;width:360px;height:100vh;z-index:2000;background:var(--navy-light);border-left:1px solid var(--hair);padding:0;display:none;flex-direction:column;transform:translateX(100%);transition:transform .3s ease}
+.panel-floorplan.open{display:flex;transform:translateX(0)}
+.fp-header{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid var(--hair);flex-shrink:0}
+.fp-header h3{font-family:var(--font-display);font-size:14px;color:#fff;margin:0}
+.fp-header button{background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;padding:4px}
+.fp-header button:hover{color:#fff}
+.fp-canvas{flex:1;position:relative;overflow:hidden;background:rgba(0,0,0,.2);margin:12px;border-radius:10px;min-height:200px}
+.fp-canvas img{width:100%;height:100%;object-fit:contain}
+.fp-marker{position:absolute;width:22px;height:22px;transform:translate(-50%,-50%);pointer-events:none;z-index:3;transition:all .45s cubic-bezier(.4,0,.2,1)}
+.fp-dot{width:12px;height:12px;border-radius:50%;background:var(--grad-gold);border:2px solid #fff;position:absolute;top:5px;left:5px;z-index:2;box-shadow:0 0 8px rgba(200,169,106,.4)}
+.fp-pulse{width:22px;height:22px;border-radius:50%;background:rgba(200,169,106,.2);position:absolute;top:0;left:0;animation:fpPulse 2s ease-in-out infinite}
+@keyframes fpPulse{0%{opacity:1;transform:scale(.8)}50%{opacity:0;transform:scale(2)}100%{opacity:0;transform:scale(2)}}
+.fp-label{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);background:rgba(7,21,37,.85);backdrop-filter:blur(8px);padding:6px 14px;border-radius:100px;border:1px solid var(--hair);font-size:11px;color:var(--gold-light);font-weight:600;white-space:nowrap;z-index:4;pointer-events:none;transition:all .35s}
+.fp-scenes{padding:8px 12px 12px;border-top:1px solid var(--hair);flex-shrink:0;display:flex;gap:6px;overflow-x:auto}
+.fp-scene-btn{padding:6px 12px;border-radius:100px;border:1px solid var(--hair-solid);background:var(--kaca);color:var(--muted);font-size:11px;cursor:pointer;white-space:nowrap;transition:all .2s}
+.fp-scene-btn:hover{border-color:var(--gold);color:#fff}
+.fp-scene-btn.active{background:var(--grad-gold);color:var(--navy);font-weight:700;border-color:transparent}
+@media(max-width:640px){.panel-floorplan{width:100vw}}
 </style>
 </head>
 <body>
@@ -129,6 +149,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--font);background:var(--n
     <a href="#" onclick="document.querySelector('#pano').requestFullscreen()">Fullscreen</a>
     <a href="qr.html">QR</a>
     <a href="#" id="embedBtn">Embed</a>
+    <a href="#" id="floorplanBtn">Floor</a>
   </div>
 </div>
 
@@ -144,9 +165,26 @@ html,body{height:100%;overflow:hidden;font-family:var(--font);background:var(--n
   </div>
 </div>
 
-<div id="panel">
+<div id="panel" class="panel-scenes">
   <h3>Scenes</h3>
   <div id="sceneList"></div>
+</div>
+
+<!-- Floor plan panel -->
+<div id="floorplanPanel" class="panel-floorplan">
+  <div class="fp-header">
+    <h3>Floor Plan</h3>
+    <button id="fpClose">&times;</button>
+  </div>
+  <div class="fp-canvas" id="fpCanvas">
+    <img id="fpImg" alt="Floor plan" style="display:none">
+    <div id="fpMarker" class="fp-marker">
+      <div class="fp-dot"></div>
+      <div class="fp-pulse"></div>
+    </div>
+    <div id="fpLabel" class="fp-label"></div>
+  </div>
+  <div class="fp-scenes" id="fpScenes"></div>
 </div>
 
 <!-- Embed modal -->
@@ -237,6 +275,9 @@ function loadScene(sceneId) {
 let allScenes = [];
 
 function loadSceneDirect(sceneId) {
+  currentScene = sceneId;
+  // Notify floor plan if active
+  if (window._fpUpdateScene) setTimeout(() => window._fpUpdateScene(sceneId), 50);
   // Fetch tour data from the initial load (stored in closure)
   // Actually we need to access the tour data again. Let me restructure.
   // The simpler approach: pass the data around.
@@ -435,6 +476,97 @@ function loadSceneDirect(sceneId) {
     }
   };
 
+  // ── Floor plan ──
+  let floorplanActive = false;
+  let currentScenePos = {x: 50, y: 50};
+  
+  document.getElementById('floorplanBtn').onclick = function(e) {
+    e.preventDefault();
+    const panel = document.getElementById('floorplanPanel');
+    floorplanActive = !floorplanActive;
+    if (floorplanActive) {
+      panel.classList.add('open');
+      loadFloorplan();
+    } else {
+      panel.classList.remove('open');
+    }
+  };
+  
+  document.getElementById('fpClose').onclick = function() {
+    document.getElementById('floorplanPanel').classList.remove('open');
+    floorplanActive = false;
+  };
+  
+  function loadFloorplan() {
+    // We need the tour data - get it from a cached fetch or re-fetch
+    const tourId = new URLSearchParams(window.location.search).get('id') || 'demo-001';
+    fetch('/tours/' + tourId + '.json').then(r => r.json()).then(tour => {
+      if (!tour.floorplan) {
+        document.getElementById('fpCanvas').innerHTML = '<div style="padding:40px;text-align:center;color:var(--muted);font-size:13px">No floor plan available</div>';
+        return;
+      }
+      // Show floor plan image if not loaded
+      const img = document.getElementById('fpImg');
+      if (img.src !== window.location.origin + tour.floorplan) {
+        img.src = tour.floorplan;
+        img.style.display = '';
+      }
+      // Hide old canvas content if any
+      document.querySelectorAll('.fp-canvas img, .fp-canvas svg').forEach(el => el.style.display = '');
+      
+      // Build scene buttons
+      const list = document.getElementById('fpScenes');
+      list.innerHTML = '';
+      tour.scenes.forEach(s => {
+        const btn = document.createElement('button');
+        btn.className = 'fp-scene-btn' + (s.id === currentScene ? ' active' : '');
+        btn.textContent = s.title;
+        btn.onclick = () => { loadScene(s.id); updateMarker(s); };
+        list.appendChild(btn);
+      });
+      
+      // Update marker for current scene
+      const cur = tour.scenes.find(s => s.id === currentScene) || tour.scenes[0];
+      updateMarker(cur);
+    }).catch(e => {
+      document.getElementById('fpCanvas').innerHTML = '<div style="padding:40px;text-align:center;color:var(--red);font-size:13px">Failed to load floor plan</div>';
+    });
+  }
+  
+  function updateMarker(scene) {
+    currentScenePos = scene.position || {x: 50, y: 50};
+    const marker = document.getElementById('fpMarker');
+    marker.style.left = ((currentScenePos.x / 400) * 100) + '%';
+    marker.style.top = ((currentScenePos.y / 280) * 100) + '%';
+    document.getElementById('fpLabel').textContent = scene.title;
+    
+    // Update active button
+    document.querySelectorAll('.fp-scene-btn').forEach(b => {
+      b.classList.toggle('active', b.textContent === scene.title);
+    });
+  }
+
+  // Patch loadScene to update floor plan marker when scene changes
+  const origLoadScene = window.loadScene;
+  // We'll hook into the scene loading after init
+  // Add floor plan marker update to togglePanelBtn
+  function updateFloorplanMarker(sceneId) {
+    if (!floorplanActive) return;
+    fetch('/tours/' + (new URLSearchParams(window.location.search).get('id') || 'demo-001') + '.json')
+      .then(r => r.json()).then(tour => {
+        const s = tour.scenes.find(x => x.id === sceneId);
+        if (s && tour.floorplan) updateMarker(s);
+      }).catch(() => {});
+  }
+  
+  // Override loadSceneDirect to call updateFloorplanMarker
+  const _origLoad = window.loadSceneDirect || window.loadScene;
+  // We'll hook via the existing scene loading infrastructure
+  // Actually, let's expose a global
+  window._fpUpdateScene = function(sceneId) {
+    setTimeout(() => updateFloorplanMarker(sceneId), 100);
+  };
+  
 })();
 </script>
 </body>
