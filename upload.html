@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Upload Media — Zentra VR3D</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --navy: #071525;
+  --navy-light: #0d1f33;
+  --navy-panel: #11233b;
+  --gold: #C8A96A;
+  --gold-light: #E8CE86;
+  --gold-deep: #9a7a2e;
+  --grad-gold: linear-gradient(135deg, #e8ce86 0%, #c9a227 45%, #9a7a2e 100%);
+  --body: #C7D1DC;
+  --muted: #8C9FB4;
+  --green: #43B02A;
+  --red: #E8776A;
+  --amber: #F0AD4E;
+  --font: 'Inter', -apple-system, sans-serif;
+  --font-display: 'Manrope', 'Inter', sans-serif;
+  --radius: 12px;
+  --hair: rgba(200,169,106,.2);
+  --hair-solid: rgba(255,255,255,.07);
+  --kaca: rgba(13,31,51,.7);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:var(--font);
+  background:radial-gradient(1100px 620px at 12% -8%,rgba(200,169,106,.10),transparent 60%),
+             radial-gradient(900px 520px at 92% 4%,rgba(200,169,106,.05),transparent 55%),
+             var(--navy);
+  color:var(--body);
+  min-height:100vh;
+  line-height:1.6;
+}
+
+/* ── Top bar ── */
+.topbar{
+  position:sticky;top:0;z-index:10;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  background:rgba(7,21,37,.85);
+  border-bottom:1px solid var(--hair);
+  padding:12px 24px;
+  display:flex;align-items:center;gap:16px;
+}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.mark{
+  width:30px;height:30px;border-radius:8px;
+  background:var(--grad-gold);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-weight:800;font-size:14px;color:var(--navy);
+}
+.brand-text{font-family:var(--font-display);font-weight:800;font-size:14px;letter-spacing:.12em;color:#fff}
+.brand-text em{font-style:normal;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.brand-sub{font-size:11px;color:var(--muted);letter-spacing:0;font-weight:400;margin-left:4px}
+.back-link{margin-left:auto;font-size:13px;color:var(--muted);text-decoration:none}
+.back-link:hover{color:var(--gold-light)}
+
+/* ── Main layout ── */
+.container{max-width:820px;margin:0 auto;padding:40px 24px 80px}
+
+/* ── Step progress ── */
+.steps{display:flex;gap:8px;margin-bottom:36px;counter-reset:step}
+.step-item{flex:1;position:relative;padding:14px 16px 14px 44px;border-radius:var(--radius);border:1px solid var(--hair-solid);background:var(--kaca);cursor:default;opacity:.5;transition:all .3s}
+.step-item::before{
+  counter-increment:step;content:counter(step);
+  position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;
+  background:rgba(255,255,255,.06);color:var(--muted);
+  transition:all .3s;
+}
+.step-item.active{opacity:1;border-color:var(--gold)}
+.step-item.active::before{background:var(--grad-gold);color:var(--navy)}
+.step-item.done{opacity:.8;border-color:var(--green)}
+.step-item.done::before{background:var(--green);color:#fff;content:"✓"}
+.step-title{font-size:13px;font-weight:600;color:#fff;margin-bottom:2px}
+.step-desc{font-size:11px;color:var(--muted)}
+
+/* ── Panels ── */
+.panel{display:none;animation:fadeIn .35s ease}
+.panel.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── Method cards ── */
+.method-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px}
+.method-card{
+  position:relative;
+  padding:28px 20px 20px;
+  border-radius:var(--radius);
+  border:1.5px solid var(--hair-solid);
+  background:var(--kaca);
+  cursor:pointer;
+  transition:all .3s;
+  text-align:center;
+}
+.method-card:hover{border-color:var(--gold);transform:translateY(-2px)}
+.method-card.selected{border-color:var(--gold);box-shadow:0 0 24px rgba(200,169,106,.12)}
+.method-card.selected::after{
+  content:"✓";position:absolute;top:10px;right:12px;
+  width:20px;height:20px;border-radius:50%;
+  background:var(--grad-gold);color:var(--navy);
+  font-size:11px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+}
+.method-icon{font-size:32px;margin-bottom:10px;display:block}
+.method-card h3{font-family:var(--font-display);font-size:15px;color:#fff;margin-bottom:4px}
+.method-card p{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* ── Guide sections ── */
+.guide{display:none;margin-bottom:24px}
+.guide.active{display:block}
+.guide-box{
+  padding:20px;border-radius:var(--radius);
+  border:1px solid var(--hair-solid);
+  background:var(--kaca);
+}
+.guide-box h4{font-size:13px;color:var(--gold-light);margin-bottom:8px;font-weight:600}
+.guide-steps{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.guide-step{padding:12px;border-radius:8px;background:rgba(0,0,0,.2);font-size:12px;color:var(--body)}
+.guide-step strong{color:#fff;display:block;margin-bottom:3px;font-size:13px}
+.guide-icon{font-size:20px;display:block;margin-bottom:6px}
+.do-dont{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.do-item,.dont-item{padding:10px 12px;border-radius:8px;font-size:12px}
+.do-item{background:rgba(67,176,42,.08);border:1px solid rgba(67,176,42,.15)}
+.do-item::before{content:"✓ DO ";color:var(--green);font-weight:700}
+.dont-item{background:rgba(232,119,106,.08);border:1px solid rgba(232,119,106,.15)}
+.dont-item::before{content:"✗ DON'T ";color:var(--red);font-weight:700}
+
+/* ── Form ── */
+.form-section{margin-bottom:24px}
+.form-section h3{font-family:var(--font-display);font-size:15px;color:#fff;margin-bottom:4px}
+.form-section p{font-size:12px;color:var(--muted);margin-bottom:14px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-grid.wide{grid-template-columns:1fr}
+label{display:block;font-size:11.5px;font-weight:600;color:var(--gold-light);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+input,select,textarea{
+  width:100%;padding:10px 12px;border-radius:8px;
+  border:1px solid var(--hair-solid);background:rgba(0,0,0,.25);
+  color:#fff;font-family:var(--font);font-size:13px;transition:all .2s;outline:none
+}
+input:focus,select:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(200,169,106,.1)}
+textarea{resize:vertical;min-height:56px}
+select option{background:var(--navy);color:#fff}
+::placeholder{color:var(--muted);opacity:.6}
+
+/* ── Upload zone ── */
+.drop-zone{
+  border:2px dashed var(--hair-solid);
+  border-radius:var(--radius);
+  padding:40px 20px;
+  text-align:center;
+  cursor:pointer;
+  transition:all .25s;
+  background:rgba(0,0,0,.12);
+  position:relative;
+}
+.drop-zone:hover,.drop-zone.dragover{border-color:var(--gold);background:rgba(200,169,106,.04)}
+.drop-zone.dragover{border-style:solid;transform:scale(1.01)}
+.drop-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer}
+.drop-icon{font-size:36px;display:block;margin-bottom:8px}
+.drop-text{font-size:14px;color:var(--body);margin-bottom:4px}
+.drop-text strong{color:#fff;font-weight:600}
+.drop-hint{font-size:11.5px;color:var(--muted)}
+.drop-info{display:flex;justify-content:center;gap:24px;margin-top:12px;font-size:11px;color:var(--muted)}
+
+/* ── File list ── */
+.file-list{margin-top:12px;display:grid;gap:8px}
+.file-item{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 12px;border-radius:8px;
+  background:var(--kaca);border:1px solid var(--hair-solid);
+  font-size:12.5px;
+}
+.file-thumb{width:44px;height:34px;border-radius:4px;object-fit:cover;background:rgba(0,0,0,.2)}
+.file-item .name{flex:1;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.file-item .size{color:var(--muted);font-size:11px}
+.file-item .remove{cursor:pointer;color:var(--red);font-size:16px;padding:4px;border:none;background:none;line-height:1}
+
+/* ── Buttons ── */
+.btn-group{display:flex;gap:12px;margin-top:28px;justify-content:space-between}
+.btn{
+  padding:12px 28px;border-radius:100px;border:none;
+  font-family:var(--font);font-size:13px;font-weight:700;
+  cursor:pointer;transition:all .25s;
+  text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+}
+.btn-primary{background:var(--grad-gold);color:var(--navy)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(200,169,106,.2)}
+.btn-primary:disabled{opacity:.35;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-ghost{background:transparent;color:var(--body);border:1px solid var(--hair-solid)}
+.btn-ghost:hover{color:#fff;border-color:var(--gold)}
+.btn-success{background:var(--green);color:#fff}
+
+/* ── Success screen ── */
+.success-screen{text-align:center;padding:60px 20px}
+.success-icon{font-size:56px;margin-bottom:16px;display:block}
+.success-screen h2{font-family:var(--font-display);font-size:24px;color:#fff;margin-bottom:8px}
+.success-screen p{font-size:14px;color:var(--muted);margin-bottom:20px;max-width:440px;margin-left:auto;margin-right:auto}
+.ticket{border:1px solid var(--hair);border-radius:var(--radius);padding:20px;background:var(--kaca);margin-bottom:20px;text-align:left}
+.ticket-row{display:flex;justify-content:space-between;padding:6px 0;font-size:12.5px;border-bottom:1px solid var(--hair-solid)}
+.ticket-row:last-child{border:none}
+.ticket-row .t-label{color:var(--muted)}
+.ticket-row .t-value{color:#fff;font-weight:500}
+
+/* ── Status badge ── */
+.badge{display:inline-block;padding:3px 10px;border-radius:100px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.3px}
+.badge-method{background:rgba(200,169,106,.12);color:var(--gold-light)}
+.badge-pending{background:rgba(240,173,78,.12);color:var(--amber)}
+
+/* ── Responsive ── */
+@media(max-width:640px){
+  .container{padding:24px 16px 60px}
+  .step-item{padding:10px 12px 10px 36px;font-size:11px}
+  .step-item::before{width:18px;height:18px;font-size:10px;left:10px}
+  .step-title{font-size:11px}
+  .step-desc{display:none}
+  .method-grid{grid-template-columns:1fr}
+  .guide-steps{grid-template-columns:1fr}
+  .do-dont{grid-template-columns:1fr}
+  .form-grid{grid-template-columns:1fr}
+  .btn-group{flex-direction:column}
+  .btn-group .btn{width:100%;justify-content:center}
+}
+
+/* ── Toast ── */
+.toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);
+  background:var(--green);color:#fff;padding:10px 20px;border-radius:100px;
+  font-size:13px;font-weight:600;opacity:0;transition:all .35s;z-index:100;
+  pointer-events:none;white-space:nowrap;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.err{background:var(--red)}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="/" class="brand">
+    <div class="mark">Z</div>
+    <div class="brand-text">ZENTRA <em>VR3D</em><span class="brand-sub">Upload</span></div>
+  </a>
+  <a href="/" class="back-link">← Home</a>
+</div>
+
+<div class="container">
+
+  <div class="steps" id="stepIndicator">
+    <div class="step-item active" data-step="1">
+      <div class="step-title">Method</div>
+      <div class="step-desc">Photos or video</div>
+    </div>
+    <div class="step-item" data-step="2">
+      <div class="step-title">Property Details</div>
+      <div class="step-desc">Tell us about the property</div>
+    </div>
+    <div class="step-item" data-step="3">
+      <div class="step-title">Upload & Submit</div>
+      <div class="step-desc">Send for processing</div>
+    </div>
+  </div>
+
+  <!-- ═══════════ STEP 1: METHOD ═══════════ -->
+  <div class="panel active" id="panel1">
+    <div class="form-section">
+      <h3>Choose your capture method</h3>
+      <p>We process both photos and videos into immersive 3D. Pick the one that's easiest for you.</p>
+    </div>
+
+    <div class="method-grid" id="methodGrid">
+      <div class="method-card" data-method="photos">
+        <span class="method-icon">📸</span>
+        <h3>Photos (Stitch)</h3>
+        <p>Take 8-12 overlapping photos while turning on the spot. Best for interiors with good lighting. Works on any phone.</p>
+      </div>
+      <div class="method-card" data-method="video">
+        <span class="method-icon">🎥</span>
+        <h3>Video (3D Scan)</h3>
+        <p>Record a slow walkthrough video covering every room. Produces a more immersive result. Recommended for larger spaces.</p>
+      </div>
+    </div>
+
+    <!-- ── Photo guide ── -->
+    <div class="guide" id="guidePhotos">
+      <div class="guide-box">
+        <h4>📸 How to take photos for 360°</h4>
+        <div class="guide-steps">
+          <div class="guide-step">
+            <span class="guide-icon">📍</span>
+            <strong>Stand in one spot</strong>
+            Keep your feet planted. Turn your body, not your feet.
+          </div>
+          <div class="guide-step">
+            <span class="guide-icon">🔄</span>
+            <strong>Overlap 30%</strong>
+            Each photo should overlap the previous by about a third.
+          </div>
+          <div class="guide-step">
+            <span class="guide-icon">📐</span>
+            <strong>8-12 photos per room</strong>
+            Take a full circle. More photos = smoother result.
+          </div>
+          <div class="guide-step">
+            <span class="guide-icon">💡</span>
+            <strong>Good lighting</strong>
+            Turn on all lights. Open curtains. Avoid harsh shadows.
+          </div>
+        </div>
+        <div class="do-dont">
+          <div class="do-item">Hold phone vertically, keep it level</div>
+          <div class="dont-item">Use zoom, flash, or HDR mode</div>
+          <div class="do-item">Move slowly and steadily</div>
+          <div class="dont-item">Photograph mirrors or glass directly</div>
+        </div>
+        <p style="margin-top:12px;font-size:11.5px;color:var(--muted)"><strong>Pro tip:</strong> For best results, mount your phone on a small tripod or selfie stick held steady at chest height. One circle per room — take 8-12 shots.</p>
+      </div>
+    </div>
+
+    <!-- ── Video guide ── -->
+    <div class="guide" id="guideVideo">
+      <div class="guide-box">
+        <h4>🎥 How to record video for 3D</h4>
+        <div class="guide-steps">
+          <div class="guide-step">
+            <span class="guide-icon">🚶</span>
+            <strong>Walk slowly</strong>
+            Slow walking pace. Each room takes 15-30 seconds.
+          </div>
+          <div class="guide-step">
+            <span class="guide-icon">🔄</span>
+            <strong>Pan the camera</strong>
+            Slowly look left and right as you walk to capture walls and corners.
+          </div>
+          <div class="guide-step">
+            <span class="guide-icon">🏠</span>
+            <strong>Cover every room</strong>
+            Don't skip rooms. Walk through doorways, show the layout.
+          </div>
+          <div class="guide-step">
+            <span class="guide-icon">📹</span>
+            <strong>Keep it steady</strong>
+            Hold phone with two hands. No sudden movements.
+          </div>
+        </div>
+        <div class="do-dont">
+          <div class="do-item">Record at 1080p 30fps or higher</div>
+          <div class="dont-item">Use fisheye or wide-angle lens</div>
+          <div class="do-item">Show the entrance and each room entry</div>
+          <div class="dont-item">Film people, pets, or reflective surfaces</div>
+        </div>
+        <p style="margin-top:12px;font-size:11.5px;color:var(--muted)"><strong>Pro tip:</strong> Start at the front door, walk through each room naturally, and end at the back. A single continuous video is ideal. Aim for 2-5 minutes total.</p>
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <span></span>
+      <button class="btn btn-primary" id="step1Next" disabled>Next: Property Details →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════ STEP 2: PROPERTY DETAILS ═══════════ -->
+  <div class="panel" id="panel2">
+    <div class="form-section">
+      <h3>Property Information</h3>
+      <p>We need some details to link your media to the right property.</p>
+    </div>
+
+    <div class="form-grid wide">
+      <div>
+        <label for="propName">Property Name / Address</label>
+        <input type="text" id="propName" placeholder="e.g. No 12, Jalan SS2/72, Petaling Jaya" required>
+      </div>
+    </div>
+    <div class="form-grid">
+      <div>
+        <label for="propType">Property Type</label>
+        <select id="propType">
+          <option value="">— Select —</option>
+          <option value="condo">Condominium / Apartment</option>
+          <option value="terrace">Terrace / Link House</option>
+          <option value="semi-d">Semi-Detached</option>
+          <option value="bungalow">Bungalow</option>
+          <option value="office">Office / Commercial</option>
+          <option value="land">Land / Vacant Plot</option>
+          <option value="showroom">Showroom / Gallery</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div>
+        <label for="projectName">Project / Building Name</label>
+        <input type="text" id="projectName" placeholder="e.g. The Vertical, Bangsar South">
+      </div>
+    </div>
+    <div class="form-grid">
+      <div>
+        <label for="clientName">Your Name</label>
+        <input type="text" id="clientName" placeholder="Your full name" required>
+      </div>
+      <div>
+        <label for="clientPhone">Phone / WhatsApp</label>
+        <input type="tel" id="clientPhone" placeholder="e.g. 012-345 6789" required>
+      </div>
+    </div>
+    <div class="form-grid wide">
+      <div>
+        <label for="clientEmail">Email (optional)</label>
+        <input type="email" id="clientEmail" placeholder="For receipt and updates">
+      </div>
+    </div>
+    <div class="form-grid wide">
+      <div>
+        <label for="notes">Notes</label>
+        <textarea id="notes" placeholder="Any special instructions? e.g. 'Focus on the renovated kitchen and master bedroom'"></textarea>
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-ghost" id="step2Back">← Back</button>
+      <button class="btn btn-primary" id="step2Next">Next: Upload Files →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════ STEP 3: UPLOAD ═══════════ -->
+  <div class="panel" id="panel3">
+    <div class="form-section">
+      <h3>Upload your media</h3>
+      <p id="uploadDesc">Drop your files below or click to select.</p>
+    </div>
+
+    <div class="drop-zone" id="dropZone">
+      <input type="file" id="fileInput" multiple accept="image/*,video/*">
+      <span class="drop-icon">📂</span>
+      <div class="drop-text">Drag & drop files here, or <strong>click to browse</strong></div>
+      <div class="drop-hint" id="uploadHint">Supports: JPG, PNG, MP4, MOV · Max 200MB per file</div>
+      <div class="drop-info">
+        <span id="fileMin">📸 Minimum: 6 files</span>
+        <span>📦 Total: 0 MB</span>
+      </div>
+    </div>
+
+    <div class="file-list" id="fileList"></div>
+
+    <div class="form-grid wide" style="margin-top:16px">
+      <div>
+        <label for="methodNote">Anything else about the media?</label>
+        <textarea id="methodNote" placeholder="e.g. 'Photos taken with iPhone 15, living room has skylight'"></textarea>
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-ghost" id="step3Back">← Back</button>
+      <button class="btn btn-primary" id="step3Submit">Submit for Processing</button>
+    </div>
+  </div>
+
+  <!-- ═══════════ SUCCESS ═══════════ -->
+  <div class="panel" id="panelSuccess">
+    <div class="success-screen">
+      <span class="success-icon">🎉</span>
+      <h2>Media Received!</h2>
+      <p>Your property media has been queued for VR processing. We'll notify you when the virtual tour is ready.</p>
+      <div class="ticket" id="ticket">
+        <div class="ticket-row"><span class="t-label">Reference</span><span class="t-value" id="confirmRef">—</span></div>
+        <div class="ticket-row"><span class="t-label">Property</span><span class="t-value" id="confirmProp">—</span></div>
+        <div class="ticket-row"><span class="t-label">Method</span><span class="t-value" id="confirmMethod">—</span></div>
+        <div class="ticket-row"><span class="t-label">Files</span><span class="t-value" id="confirmFiles">—</span></div>
+        <div class="ticket-row"><span class="t-label">Status</span><span class="t-value"><span class="badge badge-pending">Processing</span></span></div>
+      </div>
+      <p style="font-size:12px;color:var(--muted)">Typically processed within 24-48 hours. We'll contact you via WhatsApp.</p>
+      <div class="btn-group" style="justify-content:center">
+        <a href="/tours.html" class="btn btn-primary">Browse Other Tours</a>
+        <a href="/upload.html" class="btn btn-ghost">Upload Another</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════ STATE ═══════════
+let step = 1;
+let method = null;
+let files = [];
+const maxStep = 3;
+
+// ═══════════ STEP NAVIGATION ═══════════
+function goToStep(n) {
+  step = n;
+  document.querySelectorAll('.panel').forEach((p,i) => {
+    p.classList.toggle('active', i === n-1 || (i === 3 && n === 4));
+  });
+  document.querySelectorAll('.step-item').forEach((el,i) => {
+    el.classList.toggle('active', i === n-1);
+    el.classList.toggle('done', i < n-1);
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ═══════════ STEP 1: METHOD ═══════════
+document.querySelectorAll('.method-card').forEach(card => {
+  card.onclick = () => {
+    document.querySelectorAll('.method-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    method = card.dataset.method;
+    document.getElementById('step1Next').disabled = false;
+    document.getElementById(method === 'photos' ? 'guidePhotos' : 'guideVideo').classList.add('active');
+    document.getElementById(method === 'photos' ? 'guideVideo' : 'guidePhotos').classList.remove('active');
+    // Update upload hints
+    if (method === 'photos') {
+      document.getElementById('uploadDesc').textContent = 'Select 8-12 photos taken from different angles in each room.';
+      document.getElementById('fileInput').accept = 'image/*';
+      document.getElementById('uploadHint').textContent = 'Supports: JPG, PNG · Max 20MB per file · Minimum 6 photos';
+    } else {
+      document.getElementById('uploadDesc').textContent = 'Upload a single video walkthrough or multiple clips.';
+      document.getElementById('fileInput').accept = 'video/*';
+      document.getElementById('uploadHint').textContent = 'Supports: MP4, MOV · Max 500MB per file · 1-3 clips ideal';
+    }
+  };
+});
+
+document.getElementById('step1Next').onclick = () => { if(!document.getElementById('step1Next').disabled) goToStep(2); };
+
+// ═══════════ STEP 2: PROPERTY ═══════════
+document.getElementById('step2Back').onclick = () => goToStep(1);
+document.getElementById('step2Next').onclick = () => {
+  const name = document.getElementById('propName').value.trim();
+  const client = document.getElementById('clientName').value.trim();
+  const phone = document.getElementById('clientPhone').value.trim();
+  if (!name) { showToast('Please enter the property name', true); document.getElementById('propName').focus(); return; }
+  if (!client) { showToast('Please enter your name', true); document.getElementById('clientName').focus(); return; }
+  if (!phone) { showToast('Please enter your phone number', true); document.getElementById('clientPhone').focus(); return; }
+  goToStep(3);
+};
+
+// ═══════════ FILE UPLOAD ═══════════
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+const fileList = document.getElementById('fileList');
+
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('dragover'); handleFiles(e.dataTransfer.files); });
+fileInput.addEventListener('change', () => { handleFiles(fileInput.files); fileInput.value = ''; });
+
+function handleFiles(newFiles) {
+  for (const f of newFiles) {
+    // Check duplicate
+    if (files.some(x => x.name === f.name && x.size === f.size)) continue;
+    // Size check
+    const maxSize = method === 'video' ? 500 : 20;
+    if (f.size > maxSize * 1024 * 1024) {
+      showToast(`${f.name} exceeds ${maxSize}MB limit`, true);
+      continue;
+    }
+    files.push(f);
+  }
+  renderFiles();
+}
+
+function renderFiles() {
+  fileList.innerHTML = '';
+  let totalMB = 0;
+  files.forEach((f, i) => {
+    const mb = (f.size / (1024 * 1024)).toFixed(1);
+    totalMB += parseFloat(mb);
+    const isImg = f.type.startsWith('image/');
+    const el = document.createElement('div');
+    el.className = 'file-item';
+    el.innerHTML = `
+      <span class="file-thumb">${isImg ? `<img src="${URL.createObjectURL(f)}" style="width:44px;height:34px;object-fit:cover;border-radius:4px">` : '🎬'}</span>
+      <span class="name">${f.name}</span>
+      <span class="size">${mb} MB</span>
+      <button class="remove" data-i="${i}">&times;</button>
+    `;
+    fileList.appendChild(el);
+  });
+  document.querySelector('.drop-info').innerHTML = `
+    <span>📸 Files: ${files.length}</span>
+    <span>📦 Total: ${totalMB.toFixed(1)} MB</span>
+  `;
+  document.querySelectorAll('.file-item .remove').forEach(btn => {
+    btn.onclick = () => {
+      const idx = parseInt(btn.dataset.i);
+      URL.revokeObjectURL(files[idx].name);
+      files.splice(idx, 1);
+      renderFiles();
+    };
+  });
+}
+
+// ═══════════ SUBMIT ═══════════
+document.getElementById('step3Back').onclick = () => goToStep(2);
+document.getElementById('step3Submit').onclick = () => {
+  if (files.length === 0) {
+    showToast('Please upload at least one file', true);
+    return;
+  }
+
+  // Generate reference
+  const ref = 'VR-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).substring(2,5).toUpperCase();
+
+  // Fill confirmation
+  document.getElementById('confirmRef').textContent = ref;
+  document.getElementById('confirmProp').textContent = document.getElementById('propName').value.trim() || '—';
+  document.getElementById('confirmMethod').textContent = method === 'photos' ? '📸 Photo Stitch' : '🎥 Video 3D Scan';
+  document.getElementById('confirmFiles').textContent = files.length + ' file(s)';
+
+  goToStep(4);
+};
+
+// ═══════════ TOAST ═══════════
+function showToast(msg, isError = false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (isError ? ' err' : '');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+</script>
+</body>
+</html>
