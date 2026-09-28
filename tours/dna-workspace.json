@@ -1,0 +1,26 @@
+{
+  "id": "dna-workspace",
+  "title": "D.N.A Workspace — Glass Box 2",
+  "property": "D.N.A Workspace, Bangi Sentral",
+  "album": {
+    "id": "dna-workspace",
+    "name": "DNA Workspace"
+  },
+  "description": "360° view of the glass-walled co-working unit at D.N.A Workspace, Bandar Baru Bangi.",
+  "thumb": "/assets/panorama-dna-glassbox-2.jpg",
+  "created": "2026-09-28",
+  "scenes": [
+    {
+      "id": "glassbox-2",
+      "title": "Glassbox #2",
+      "description": "Open-plan co-working unit divided by black-framed glass partitions with amber privacy film. Light wood-look flooring, white ceiling with exposed ductwork and track lighting, ergonomic chairs and timber laminate desks, natural light from full-height windows.",
+      "panorama": "/assets/panorama-dna-glassbox-2.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "hotSpots": []
+    }
+  ]
+}
