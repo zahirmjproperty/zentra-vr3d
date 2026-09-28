@@ -1,0 +1,40 @@
+{
+  "versi": 1,
+  "dijana": "2026-09-28",
+  "unit": "meter",
+  "titik_asal": "tengah pangkal (x=0, y=0, z=0 pada lantai)",
+  "model": {
+    "bangunan-konsep": {
+      "nama": "Bangunan Konsep — Komerial 2 Tingkat",
+      "kategori": "projek",
+      "jenis": "bangunan",
+      "glb": "../models/projects/bangunan-konsep.glb",
+      "usdz": "../models/projects/bangunan-konsep.usdz",
+      "saiz_m": [13.2, 8.445, 10.35],
+      "lebar_m": 12.0,
+      "tinggi_m": 8.445,
+      "kedalaman_m": 8.0,
+      "aras": 2,
+      "penempatan_ar": "floor",
+      "nota": "Massing konsep. Bukan reka bentuk yang diluluskan.",
+      "bilik": [
+        { "nama": "Ruang Komersial", "aras": "G", "luas_m2": 96.0 },
+        { "nama": "Aras Atas", "aras": "1", "luas_m2": 80.6 }
+      ]
+    },
+    "sofa-3-seater": {
+      "nama": "Sofa 3 Tempat Duduk",
+      "kategori": "perabot",
+      "jenis": "perabot",
+      "glb": "../models/furniture/sofa-3-seater.glb",
+      "usdz": "../models/furniture/sofa-3-seater.usdz",
+      "saiz_m": [2.1, 0.95, 0.92],
+      "lebar_m": 2.1,
+      "tinggi_m": 0.95,
+      "kedalaman_m": 0.92,
+      "penempatan_ar": "floor",
+      "nota": "Model contoh Fasa 0 untuk menguji peletakan AR.",
+      "bilik": []
+    }
+  }
+}

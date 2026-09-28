@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Pelayar AR — ZENTRA VR3D</title>
+<meta name="description" content="Lihat model 3D projek dan perabot dalam realiti berperanta (AR) pada telefon anda.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='5' fill='%23071525'/><text x='16' y='23' font-size='19' font-weight='bold' text-anchor='middle' fill='%23C8A96A'>Z</text></svg>">
+<link rel="stylesheet" href="./ar.css">
+</head>
+<body>
+
+<header>
+  <div class="hd">
+    <a class="brand" href="./index.html">
+      <span class="zk">Z</span>
+      <span>
+        <b>ZENTRA VR3D</b>
+        <span>Augmented Reality</span>
+      </span>
+    </a>
+    <a class="back" href="./index.html">← Hab AR</a>
+  </div>
+</header>
+
+<div class="bar" id="bar" role="tablist" aria-label="Pilih model"></div>
+
+<main>
+  <div class="stage">
+    <model-viewer id="mv"
+      alt="Model 3D"
+      ar
+      ar-modes="webxr scene-viewer quick-look"
+      ar-placement="floor"
+      camera-controls
+      touch-action="pan-y"
+      auto-rotate
+      auto-rotate-delay="900"
+      rotation-per-second="18deg"
+      shadow-intensity="1.1"
+      shadow-softness="0.85"
+      environment-image="neutral"
+      exposure="1.05"
+      tone-mapping="neutral"
+      interaction-prompt="auto"
+      loading="eager"
+      reveal="auto"
+      disable-tap>
+      <div slot="progress-bar"></div>
+    </model-viewer>
+    <div class="stage-hud">
+      <span class="chip" id="chip-kmrp">Mengesan…</span>
+      <span class="chip" id="chip-3d">Pratonton 3D</span>
+    </div>
+  </div>
+
+  <div class="cta">
+    <button class="zbtn" id="btn-ar" slot="ar-button" hidden>
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="M3 7l9 5 9-5"/><path d="M12 12v10"/>
+      </svg>
+      Lihat dalam AR
+    </button>
+    <button class="ghost" id="btn-reset">Set semula pandangan</button>
+  </div>
+
+  <div class="note info" id="note-ar" hidden>
+    <b>AR tidak tersedia pada peranti ini.</b>
+    Anda masih boleh memutar dan mengezum model 3D di atas. Untuk AR, buka pautan ini pada
+    telefon Android (Chrome) atau iPhone/iPad (Safari).
+  </div>
+
+  <div class="note" id="note-http" hidden>
+    <b>Kamera memerlukan HTTPS.</b> AR hanya berfungsi melalui sambungan selamat. Halaman ini
+    dikesan tidak menggunakan HTTPS, jadi butang AR mungkin gagal.
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Maklumat Model</h3>
+      <div class="kv"><span>Nama</span><span id="i-nama">—</span></div>
+      <div class="kv"><span>Dimensi</span><span id="i-saiz">—</span></div>
+      <div class="kv"><span>Kategori</span><span id="i-kat">—</span></div>
+      <div class="kv"><span>Fail GLB</span><span id="i-glb">—</span></div>
+      <div class="kv"><span>Fail USDZ</span><span id="i-usdz">—</span></div>
+    </div>
+    <div class="card">
+      <h3>Cara Guna</h3>
+      <div style="font-size:.8rem;line-height:1.65;color:#cfd8e0">
+        <div>1. Ketik <b style="color:var(--gold)">Lihat dalam AR</b>.</div>
+        <div>2. Gerakkan telefon perlahan-lahan untuk mengesan lantai.</div>
+        <div>3. Ketik pada lantai untuk meletakkan model.</div>
+        <div>4. Cubit untuk mengezum, seret satu jari untuk memutar.</div>
+      </div>
+    </div>
+    <div class="card" id="kad-sesi" hidden>
+      <h3>Sesi AR</h3>
+      <div class="kv"><span>Status</span><span id="i-status">—</span></div>
+      <div class="kv"><span>Masa mula</span><span id="i-mula">—</span></div>
+      <div class="kv"><span>Objek diletakkan</span><span id="i-letak">—</span></div>
+    </div>
+  </div>
+
+  <div class="note" style="border-left-color:var(--err);background:rgba(248,113,113,.07);color:#f0d3d3">
+    <b style="color:var(--err)">Penafian:</b> Visualisasi AR ini adalah <b>ilustrasi</b>, bukan tinjauan,
+    ukuran tepat, atau reka bentuk yang diluluskan. Jangan gunakan untuk mengesahkan sempadan, set back,
+    atau dimensi. Ketepatan peletakan berbeza mengikut peranti, pencahayaan dan persekitaran.
+  </div>
+</main>
+
+<footer>
+  ZENTRA VR3D · Fasa 0 — bukti konsep AR · Zentra Property Group<br>
+  Model: sumber terbuka (trimesh + OpenUSD) · Pelayar: model-viewer (Apache-2.0, hos sendiri)
+</footer>
+
+<script src="../assets/zvr3d-tracker.js"></script>
+<script src="./ar-detect.js"></script>
+<script type="module" src="../assets/vendor/model-viewer-4.3.1.min.js"></script>
+<script>
+(function () {
+  'use strict';
+  var Q = new URLSearchParams(location.search);
+  var idDiminta = Q.get('m') || 'bangunan-konsep';
+  var MANIFEST = null, mv = null, kp = {}, dilancarkan = 0, masaMula = null;
+
+  function el(i){ return document.getElementById(i); }
+  function jejak(ev, data){
+    try { if (window.ZVR3D_TRACKER) window.ZVR3D_TRACKER.track(ev, data || {}); } catch(e){}
+  }
+  function fmtSaiz(a){ return a ? a[0].toFixed(2)+' × '+a[1].toFixed(2)+' × '+a[2].toFixed(2)+' m' : '—'; }
+  function namaFail(p){ return p ? p.split('/').pop() : '—'; }
+
+  function binaTab(){
+    var bar = el('bar'); bar.innerHTML = '';
+    Object.keys(MANIFEST.model).forEach(function (k) {
+      var m = MANIFEST.model[k];
+      var b = document.createElement('button');
+      b.className = 'tab'; b.type = 'button'; b.role = 'tab';
+      b.textContent = (m.jenis === 'perabot' ? 'Perabot · ' : 'Projek · ') + m.nama;
+      b.setAttribute('aria-selected', String(k === idDiminta));
+      b.onclick = function () { pilih(k); };
+      bar.appendChild(b);
+    });
+  }
+
+  function isiMaklumat(m){
+    el('i-nama').textContent = m.nama;
+    el('i-saiz').textContent = fmtSaiz(m.saiz_m);
+    el('i-kat').textContent  = m.kategori + ' / ' + m.jenis;
+    el('i-glb').textContent  = namaFail(m.glb);
+    el('i-usdz').textContent = namaFail(m.usdz);
+  }
+
+  function pilih(k){
+    var m = MANIFEST.model[k];
+    if (!m || !mv) return;
+    idDiminta = k;
+    mv.setAttribute('src', m.glb);
+    mv.setAttribute('ios-src', m.usdz);
+    mv.setAttribute('alt', m.nama + ' — model 3D untuk realiti berperanta');
+    mv.setAttribute('ar-placement', m.penempatan_ar || 'floor');
+    isiMaklumat(m);
+    Array.prototype.forEach.call(document.querySelectorAll('.tab'), function (b, i) {
+      b.setAttribute('aria-selected', String(Object.keys(MANIFEST.model)[i] === k));
+    });
+    jejak('ar_model_dipilih', { model: k });
+    history.replaceState(null, '', '?m=' + encodeURIComponent(k));
+    el('i-letak').textContent = '—';
+  }
+
+  function paparPeranti(k){
+    var c = el('chip-kmrp');
+    if (k.quickLook) { c.className='chip ok'; c.innerHTML='iOS · Quick Look <b>sedia</b>'; }
+    else if (k.webxr) { c.className='chip ok'; c.innerHTML='Android · WebXR <b>sedia</b>'; }
+    else { c.className='chip no'; c.innerHTML='AR <b>tiada</b>'; }
+    el('chip-3d').innerHTML = 'Pratonton 3D';
+    el('note-ar').hidden = k.bolehAR;
+    el('note-http').hidden = k.https;
+    el('btn-reset').hidden = false;
+    el('btn-ar').hidden = !k.bolehAR;
+    jejak('ar_keupayaan', { laluan:k.laluan, quickLook:k.quickLook, webxr:k.webxr,
+                            kamera:k.kamera, https:k.https });
+    return k;
+  }
+
+  // ── mula ──
+  fetch('../models/manifest.json', { cache: 'no-cache' })
+    .then(function (r) { if (!r.ok) throw new Error('manifest HTTP ' + r.status); return r.json(); })
+    .then(function (j) {
+      MANIFEST = j;
+      if (!MANIFEST.model[idDiminta]) idDiminta = Object.keys(MANIFEST.model)[0];
+      binaTab();
+      customElements.whenDefined('model-viewer').then(function () {
+        mv = el('mv');
+        pilih(idDiminta);
+
+        mv.addEventListener('load', function () {
+          el('chip-3d').innerHTML = 'Pratonton 3D · <b>sedia</b>';
+          jejak('ar_model_dimuat', { model: idDiminta });
+        });
+        mv.addEventListener('error', function (e) {
+          el('chip-3d').className = 'chip no';
+          el('chip-3d').textContent = 'Model gagal dimuat';
+          jejak('ar_model_gagal', { model: idDiminta, ralat: String(e && e.detail && e.detail.type || '') });
+        });
+        mv.addEventListener('ar-status', function (e) {
+          var s = e.detail && e.detail.status;
+          el('i-status').textContent = s;
+          el('kad-sesi').hidden = false;
+          if (s === 'session-started') {
+            masaMula =new Date(); dilancarkan++;
+            el('i-mula').textContent = masaMula.toLocaleTimeString('ms-MY');
+            jejak('ar_dilancarkan', { model: idDiminta, kali: dilancarkan });
+          } else if (s === 'object-placed') {
+            el('i-letak').textContent = new Date().toLocaleTimeString('ms-MY');
+            jejak('ar_objek_diletakkan', { model: idDiminta });
+          } else if (s === 'failed') {
+            jejak('ar_gagal', { model: idDiminta });
+          } else if (s === 'not-presenting') {
+            jejak('ar_keluar', { model: idDiminta, masa_ms: masaMula ? Date.now() - masaMula.getTime() : null });
+          }
+        });
+        el('btn-reset').addEventListener('click', function () {
+          mv.cameraOrbit = '0deg 75deg 105%'; mv.fieldOfView = 'auto';
+          mv.removeAttribute('auto-rotate'); void mv.offsetWidth; mv.setAttribute('auto-rotate','');
+          jejak('ar_pandangan_set_semula', { model: idDiminta });
+        });
+        return window.ZVR3D_AR.kesan();
+      }).then(paparPeranti);
+    })
+    .catch(function (err) {
+      el('chip-3d').className = 'chip no';
+      el('chip-3d').textContent = 'Manifest gagal dimuat';
+      el('note-ar').hidden = false;
+      el('note-ar').innerHTML = '<b>Ralat memuat manifest.</b> ' + String(err && err.message || err);
+    });
+})();
+</script>
+</body>
+</html>
