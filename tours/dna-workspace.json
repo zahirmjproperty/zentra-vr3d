@@ -68,6 +68,18 @@
         "hfov": 100
       },
       "hotSpots": []
+    },
+    {
+      "id": "entrance",
+      "title": "Entrance",
+      "description": "Entrance and reception of the co-working space: a red exit door under a green KELUAR sign, street-art figure beside it, reception counters left and right, long shared work tables and glass meeting rooms on both sides, with a grey sofa lounge in the centre.",
+      "panorama": "/assets/panorama-dna-entrance.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "hotSpots": []
     }
   ]
 }
