@@ -80,6 +80,18 @@
         "hfov": 100
       },
       "hotSpots": []
+    },
+    {
+      "id": "big-desk",
+      "title": "Big Desk",
+      "description": "Long curved light-wood shared tables with white perforated and red chairs in the foreground, grey-panelled desk clusters with blue-grey chairs in the centre, and workstations facing large windows with roller shades along the far wall. Ceiling with curved black cable trays, track spotlights, pendant lamps and AC units.",
+      "panorama": "/assets/panorama-dna-big-desk.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "hotSpots": []
     }
   ]
 }
