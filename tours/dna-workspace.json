@@ -6,15 +6,15 @@
     "id": "dna-workspace",
     "name": "DNA Workspace"
   },
-  "description": "Virtual walkthrough of D.N.A Workspace, Bandar Baru Bangi \u2014 co-working units and meeting facilities. Use the scene list or the pins to move between areas.",
-  "thumb": "/assets/panorama-dna-glassbox-2.jpg",
+  "description": "Virtual walkthrough of D.N.A Workspace, Bandar Baru Bangi — co-working units and meeting facilities. Use the scene list or the pins to move between areas.",
+  "thumb": "/assets/panorama-dna-glassbox-2-v2.jpg",
   "created": "2026-09-28",
   "scenes": [
     {
       "id": "glassbox-2",
       "title": "Glassbox #2",
-      "description": "Open-plan co-working unit divided by black-framed glass partitions with amber privacy film. Light wood-look flooring, white ceiling with exposed ductwork and track lighting, ergonomic chairs and timber laminate desks, natural light from full-height windows.",
-      "panorama": "/assets/panorama-dna-glassbox-2.jpg",
+      "description": "Open-plan office with black-framed glass meeting boxes and lime-yellow frosted panels.",
+      "panorama": "/assets/panorama-dna-glassbox-2-v2.jpg",
       "initial": {
         "pitch": 0,
         "yaw": 0,
