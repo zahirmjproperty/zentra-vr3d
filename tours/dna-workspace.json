@@ -11,6 +11,18 @@
   "created": "2026-09-28",
   "scenes": [
     {
+      "id": "glassbox-1",
+      "title": "Glassbox #1",
+      "description": "Open-plan co-working floor with rows of desks and monitors, curved black-framed glass boxes with lime-yellow frosted lower panels, a whiteboard on an easel, and daylight through blinds overlooking greenery.",
+      "panorama": "/assets/panorama-dna-glassbox-1.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "hotSpots": []
+    },
+    {
       "id": "glassbox-2",
       "title": "Glassbox #2",
       "description": "Open-plan office with black-framed glass meeting boxes and lime-yellow frosted panels.",
