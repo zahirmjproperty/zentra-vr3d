@@ -56,6 +56,18 @@
         "hfov": 100
       },
       "hotSpots": []
+    },
+    {
+      "id": "hot-desk",
+      "title": "Hot Desk",
+      "description": "Open-plan co-working floor: wooden flooring, exposed concrete walls and roller blinds, black-cable string pendant lights, diagonal blue-panelled workstations with wood tops and blue chairs, plus standard desks with monitors. Glass-walled meeting rooms and yellow accent walls beyond.",
+      "panorama": "/assets/panorama-dna-hot-desk.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "hotSpots": []
     }
   ]
 }
