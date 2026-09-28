@@ -6,7 +6,7 @@
     "id": "dna-workspace",
     "name": "DNA Workspace"
   },
-  "description": "Virtual walkthrough of D.N.A Workspace, Bandar Baru Bangi — co-working units and meeting facilities. Use the scene list or the pins to move between areas.",
+  "description": "Virtual walkthrough of D.N.A Workspace, Bandar Baru Bangi \u2014 co-working units and meeting facilities. Use the scene list or the pins to move between areas.",
   "thumb": "/assets/panorama-dna-glassbox-2.jpg",
   "created": "2026-09-28",
   "scenes": [
@@ -32,6 +32,18 @@
         "yaw": 0,
         "hfov": 100
       }
+    },
+    {
+      "id": "pantry",
+      "title": "Pantry",
+      "description": "Pantry and break-out corner in a co-working office: wood-grain cabinet base with a small sink, microwave, open metal wall shelving, water dispenser and a tall locker unit. Black metal grid partitions separate it from the adjoining co-working area, lit by industrial pendant lights over light wood laminate flooring.",
+      "panorama": "/assets/panorama-dna-pantry.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "hotSpots": []
     }
   ]
 }
