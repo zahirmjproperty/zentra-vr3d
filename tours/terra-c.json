@@ -1,0 +1,159 @@
+{
+  "id": "terra-c",
+  "title": "Terra Type C",
+  "property": "Terra Residences, Presint 8 Putrajaya \u2014 Type C",
+  "album": {
+    "id": "terra-residence-c",
+    "name": "Terra Residence \u2014 Type C"
+  },
+  "description": "Virtual tour of a Terra Residences Type C apartment at Presint 8, Putrajaya \u2014 entrance and foyer, dining, living and kitchen, a study area, and the master suite with bathroom.",
+  "thumb": "/assets/panorama-terra-c-entrance.jpg",
+  "created": "2026-10-01",
+  "floorplan": "/assets/floorplan-terra-c.png",
+  "scenes": [
+    {
+      "id": "entrance",
+      "title": "Main Entrance",
+      "description": "Main entrance to the unit \u2014 timber door with a digital lock and light switches beside it.",
+      "panorama": "/assets/panorama-terra-c-entrance.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 134.0,
+        "y": 56.0
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "foyer",
+      "title": "Foyer",
+      "description": "Foyer just inside the entrance, with built-in shelving and a linen/store unit.",
+      "panorama": "/assets/panorama-terra-c-foyer.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 150.0,
+        "y": 33.6
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "dining",
+      "title": "Dining",
+      "description": "Dining area with a glass table, chairs and pendant lighting, next to the built-in study desk.",
+      "panorama": "/assets/panorama-terra-c-dining.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 153.2,
+        "y": 85.68
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "living",
+      "title": "Living Room",
+      "description": "Living area with a curved sofa, vertical timber slat wall feature and black metal shelving.",
+      "panorama": "/assets/panorama-terra-c-living.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 155.2,
+        "y": 203.0
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "kitchen",
+      "title": "Kitchen",
+      "description": "Kitchen with dark timber cabinetry and a clean, minimal finish.",
+      "panorama": "/assets/panorama-terra-c-kitchen.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 266.0,
+        "y": 50.96
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "study-area",
+      "title": "Study Area",
+      "description": "Study area with a desk and office chair, open shelving and a dark counter with sink.",
+      "panorama": "/assets/panorama-terra-c-study-area.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 196.8,
+        "y": 59.36
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "master-entrance",
+      "title": "Master Bedroom Entrance",
+      "description": "Walkway from the study area into the master suite, flanked by timber wardrobe and shelving.",
+      "panorama": "/assets/panorama-terra-c-master-entrance.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 222.0,
+        "y": 162.4
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "master-bedroom",
+      "title": "Master Bedroom",
+      "description": "Master bedroom with double doors, wall-mounted TV, bedside table and built-in wardrobe.",
+      "panorama": "/assets/panorama-terra-c-master-bedroom.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 230.4,
+        "y": 179.2
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "master-bathroom",
+      "title": "Master Bathroom",
+      "description": "Master bathroom with patterned wall tiling and walk-in wardrobe storage.",
+      "panorama": "/assets/panorama-terra-c-master-bathroom.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 247.6,
+        "y": 120.96
+      },
+      "hotSpots": []
+    }
+  ]
+}
