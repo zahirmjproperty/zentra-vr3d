@@ -1,0 +1,223 @@
+{
+  "id": "terra-a2-main",
+  "title": "Terra Type A2 — Main Unit",
+  "property": "Terra Residences, Presint 8, Putrajaya",
+  "album": {
+    "id": "terra-residence-a2",
+    "name": "Terra Residence — Type A2"
+  },
+  "description": "Virtual tour of the main unit of a Terra Residences Type A2 dual-key apartment. Entrance and foyer, living and dining areas, kitchen, balcony and yard, master bedroom with en-suite, a second bedroom and family bathroom.",
+  "thumb": "/assets/panorama-terra-main-entrance.jpg",
+  "created": "2026-10-01",
+  "floorplan": "/assets/floorplan-terra-a2.png",
+  "scenes": [
+    {
+      "id": "main-entrance",
+      "title": "Main Entrance",
+      "description": "Main entrance to the unit — built-in display shelving and a decorative vase beside the door.",
+      "panorama": "/assets/panorama-terra-main-entrance.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 300,
+        "y": 229.6
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "foyer",
+      "title": "Foyer",
+      "description": "Foyer just inside the main entrance, with recessed lighting and a wall-mounted light fitting.",
+      "panorama": "/assets/panorama-terra-foyer.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 272,
+        "y": 201.6
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "main-hall",
+      "title": "Main Hall",
+      "description": "Hallway serving the main unit, looking through to the living, dining and kitchen areas.",
+      "panorama": "/assets/panorama-terra-main-hall.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 150.0,
+        "y": 168.0
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "living",
+      "title": "Living Room",
+      "description": "Living area with a sofa on a patterned rug, opening through to the kitchen counter and dining zone.",
+      "panorama": "/assets/panorama-terra-main-living-room.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 198.0,
+        "y": 124.6
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "dining",
+      "title": "Dining",
+      "description": "Dining area with table and chairs under pendant lights, adjoining the living room and kitchen.",
+      "panorama": "/assets/panorama-terra-main-dining.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 201.6,
+        "y": 173.6
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "kitchen",
+      "title": "Kitchen",
+      "description": "Kitchen with counter and hob, oven, overhead cabinetry and under-cabinet lighting.",
+      "panorama": "/assets/panorama-terra-main-kitchen.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 255.2,
+        "y": 124.6
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "balcony",
+      "title": "Balcony",
+      "description": "Balcony off the living area with railing, sheer curtains and an open outlook.",
+      "panorama": "/assets/panorama-terra-main-balcony.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 210.0,
+        "y": 74.5
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "yard",
+      "title": "Yard",
+      "description": "Outdoor yard space with a slatted partition screen and plenty of natural daylight.",
+      "panorama": "/assets/panorama-terra-main-yard.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 271.2,
+        "y": 58.5
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "master-bedroom-1",
+      "title": "Master Bedroom — View 1",
+      "description": "Master bedroom looking towards the walk-in wardrobe and the door through to the en-suite.",
+      "panorama": "/assets/panorama-terra-main-masterbedroom-view1.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 56,
+        "y": 140.0
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "master-bedroom-2",
+      "title": "Master Bedroom — View 2",
+      "description": "Master bedroom with wall-mounted TV, shelving, curtains and flowers.",
+      "panorama": "/assets/panorama-terra-main-masterbedroom-view2.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 84,
+        "y": 168.0
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "master-bathroom",
+      "title": "Master Bathroom",
+      "description": "En-suite master bathroom with glass shower enclosure and tiled walls.",
+      "panorama": "/assets/panorama-terra-main-master-bathroom.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 60.8,
+        "y": 211.4
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "bathroom-1",
+      "title": "Bathroom 1",
+      "description": "Family bathroom with glass shower enclosure and tiled wall.",
+      "panorama": "/assets/panorama-terra-main-bathroom1.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 126.0,
+        "y": 208.6
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "bedroom-2",
+      "title": "Bedroom 2",
+      "description": "Second bedroom of the main unit.",
+      "panorama": "/assets/panorama-terra-main-bedroom2.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 134.8,
+        "y": 128.5
+      },
+      "hotSpots": []
+    }
+  ]
+}

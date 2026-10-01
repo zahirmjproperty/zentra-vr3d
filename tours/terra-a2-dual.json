@@ -1,0 +1,79 @@
+{
+  "id": "terra-a2-dual",
+  "title": "Terra Type A2 — Dual Key Suite",
+  "property": "Terra Residences, Presint 8, Putrajaya",
+  "album": {
+    "id": "terra-residence-a2",
+    "name": "Terra Residence — Type A2"
+  },
+  "description": "Virtual tour of the dual-key suite of a Terra Residences Type A2 apartment — its own entrance and hallway, a bedroom and a bathroom, so the suite can be used or let separately.",
+  "thumb": "/assets/panorama-terra-dual-entrance.jpg",
+  "created": "2026-10-01",
+  "floorplan": "/assets/floorplan-terra-a2.png",
+  "scenes": [
+    {
+      "id": "dual-entrance",
+      "title": "Dual Entrance",
+      "description": "Separate entrance to the dual-key suite, with a study desk, chair and built-in shelving.",
+      "panorama": "/assets/panorama-terra-dual-entrance.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 304,
+        "y": 204.4
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "dual-hall",
+      "title": "Dual Hall",
+      "description": "Hallway of the dual-key suite, with a glass-front wardrobe and folded towels.",
+      "panorama": "/assets/panorama-terra-dual-hall.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 316,
+        "y": 198.8
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "dual-bedroom-1",
+      "title": "Bedroom 1",
+      "description": "Bedroom of the dual-key suite, with timber wardrobe, desk and shelving.",
+      "panorama": "/assets/panorama-terra-dual-bedroom1.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 317.6,
+        "y": 143.4
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "dual-bathroom-2",
+      "title": "Bathroom 2",
+      "description": "Bathroom of the dual-key suite, with glass shower enclosure and tiled walls.",
+      "panorama": "/assets/panorama-terra-dual-bathroom2.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 340,
+        "y": 204.4
+      },
+      "hotSpots": []
+    }
+  ]
+}

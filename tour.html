@@ -479,9 +479,18 @@ function closePanel() { document.getElementById('panel').classList.remove('open'
       }
       // Show floor plan image if not loaded
       const img = document.getElementById('fpImg');
+      const relayout = function() {
+        fpLayout = null;
+        computeFpLayout();
+        const c = tour.scenes.find(s => s.id === currentScene) || tour.scenes[0];
+        if (c) updateMarker(c);
+      };
       if (img.src !== window.location.origin + tour.floorplan) {
+        img.onload = relayout;
         img.src = tour.floorplan;
         img.style.display = '';
+      } else if (img.complete) {
+        relayout();
       }
       // Hide old canvas content if any
       document.querySelectorAll('.fp-canvas img, .fp-canvas svg').forEach(el => el.style.display = '');
@@ -505,11 +514,37 @@ function closePanel() { document.getElementById('panel').classList.remove('open'
     });
   }
   
+  // The floor plan <img> is drawn with object-fit:contain, so the picture is
+  // letterboxed inside #fpCanvas. Markers must be placed against the RENDERED
+  // image box, not the canvas box, or they drift off the room they belong to.
+  let fpLayout = null;
+  let currentSceneObj = null;
+  function computeFpLayout() {
+    const img = document.getElementById('fpImg');
+    const canvas = document.getElementById('fpCanvas');
+    if (!img || !canvas || !img.naturalWidth || !img.naturalHeight) return null;
+    const cw = canvas.clientWidth, ch = canvas.clientHeight;
+    if (!cw || !ch) return null;
+    const scale = Math.min(cw / img.naturalWidth, ch / img.naturalHeight);
+    const rw = img.naturalWidth * scale, rh = img.naturalHeight * scale;
+    fpLayout = { ox: (cw - rw) / 2, oy: (ch - rh) / 2, rw: rw, rh: rh };
+    return fpLayout;
+  }
   function updateMarker(scene) {
-    currentScenePos = scene.position || {x: 50, y: 50};
+    currentSceneObj = scene;
+    currentScenePos = scene.position || {x: 200, y: 140};
     const marker = document.getElementById('fpMarker');
-    marker.style.left = ((currentScenePos.x / 400) * 100) + '%';
-    marker.style.top = ((currentScenePos.y / 280) * 100) + '%';
+    // position is stored in a 400x280 space by add_tour.py; convert to per-cent
+    const xp = Math.min(100, Math.max(0, currentScenePos.x / 400 * 100));
+    const yp = Math.min(100, Math.max(0, currentScenePos.y / 280 * 100));
+    const L = fpLayout || computeFpLayout();
+    if (L) {
+      marker.style.left = (L.ox + xp / 100 * L.rw) + 'px';
+      marker.style.top = (L.oy + yp / 100 * L.rh) + 'px';
+    } else {
+      marker.style.left = xp + '%';
+      marker.style.top = yp + '%';
+    }
     document.getElementById('fpLabel').textContent = scene.title;
     
     // Update active button
@@ -517,6 +552,9 @@ function closePanel() { document.getElementById('panel').classList.remove('open'
       b.classList.toggle('active', b.textContent === scene.title);
     });
   }
+  window.addEventListener('resize', function() {
+    if (floorplanActive && currentSceneObj) updateMarker(currentSceneObj);
+  });
 
   // Patch loadScene to update floor plan marker when scene changes
   const origLoadScene = window.loadScene;

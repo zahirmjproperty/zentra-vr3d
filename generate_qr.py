@@ -32,13 +32,12 @@ def generate(tour_id: str, tour_path: Path, print_terminal: bool = False) -> boo
 
     import qrcode
     qr = qrcode.QRCode(
-        version=4,
         error_correction=qrcode.constants.ERROR_CORRECT_M,
         box_size=16,
         border=4,
     )
     qr.add_data(tour_url)
-    qr.make(fit=False)
+    qr.make(fit=True)
 
     img = qr.make_image(fill_color="#071525", back_color="#ffffff")
     out = QR_DIR / f"{tour_id}.png"
@@ -48,9 +47,9 @@ def generate(tour_id: str, tour_path: Path, print_terminal: bool = False) -> boo
     if print_terminal:
         try:
             # Also print QR to terminal
-            qr_term = qrcode.QRCode(version=4, error_correction=qrcode.constants.ERROR_CORRECT_M, border=1)
+            qr_term = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_M, border=1)
             qr_term.add_data(tour_url)
-            qr_term.make(fit=False)
+            qr_term.make(fit=True)
             qr_term.print_ascii(invert=True)
         except:
             pass
