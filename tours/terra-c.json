@@ -6,7 +6,7 @@
     "id": "terra-residence-c",
     "name": "Terra Residence \u2014 Type C"
   },
-  "description": "Virtual tour of a Terra Residences Type C apartment at Presint 8, Putrajaya \u2014 entrance and foyer, dining, living and kitchen, a study area, and the master suite with bathroom.",
+  "description": "Virtual tour of a Terra Residences Type C apartment at Presint 8, Putrajaya \u2014 entrance and utility yard, dining, living and kitchen, a study area, and the master suite with bathroom.",
   "thumb": "/assets/panorama-terra-c-entrance.jpg",
   "created": "2026-10-01",
   "floorplan": "/assets/floorplan-terra-c.png",
@@ -28,18 +28,18 @@
       "hotSpots": []
     },
     {
-      "id": "foyer",
-      "title": "Foyer",
-      "description": "Foyer just inside the entrance, with built-in shelving and a linen/store unit.",
-      "panorama": "/assets/panorama-terra-c-foyer.jpg",
+      "id": "yard",
+      "title": "Yard",
+      "description": "Utility yard with a stainless steel sink, built-in linen shelving and a window for ventilation and daylight.",
+      "panorama": "/assets/panorama-terra-c-yard.jpg",
       "initial": {
         "pitch": 0,
         "yaw": 0,
         "hfov": 100
       },
       "position": {
-        "x": 150.0,
-        "y": 33.6
+        "x": 284.0,
+        "y": 112.0
       },
       "hotSpots": []
     },
