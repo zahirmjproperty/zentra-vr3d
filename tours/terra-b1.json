@@ -1,0 +1,223 @@
+{
+  "id": "terra-b1",
+  "title": "Terra Type B1",
+  "property": "Terra Residences, Presint 8 Putrajaya \u2014 Type B1",
+  "album": {
+    "id": "terra-residence-b1",
+    "name": "Terra Residence \u2014 Type B1"
+  },
+  "description": "Virtual tour of a Terra Residences Type B1 apartment at Presint 8, Putrajaya \u2014 entrance and hallway, dining, living and kitchen, the open kitchen-living-dining space, bedroom 1, bathroom 2, the master suite, plus the balcony and yard.",
+  "thumb": "/assets/panorama-terra-b1-entrance.jpg",
+  "created": "2026-10-01",
+  "floorplan": "/assets/floorplan-terra-b1.png",
+  "scenes": [
+    {
+      "id": "entrance",
+      "title": "Main Entrance",
+      "description": "Main entrance to the unit \u2014 solid door with an electronic digital lock.",
+      "panorama": "/assets/panorama-terra-b1-entrance.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 218.8,
+        "y": 58.8
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "hallway",
+      "title": "Hallway to Bedroom",
+      "description": "Hallway serving the bedrooms, with tiled floor and recessed ceiling lighting.",
+      "panorama": "/assets/panorama-terra-b1-hallway.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 200.0,
+        "y": 165.2
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "dining",
+      "title": "Dining",
+      "description": "Dining area with sheer and heavy curtains beside the living zone.",
+      "panorama": "/assets/panorama-terra-b1-dining.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 303.6,
+        "y": 104.16
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "living",
+      "title": "Living Room",
+      "description": "Living area with a beige sofa and a large curtained window.",
+      "panorama": "/assets/panorama-terra-b1-living.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 305.2,
+        "y": 149.8
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "kitchen",
+      "title": "Kitchen",
+      "description": "Kitchen with a dark countertop and pendant lights over the counter.",
+      "panorama": "/assets/panorama-terra-b1-kitchen.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 222.0,
+        "y": 159.6
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "kld",
+      "title": "Kitchen \u00b7 Living \u00b7 Dining",
+      "description": "Open-concept kitchen, living and dining space seen as one volume, with an integrated shelving unit.",
+      "panorama": "/assets/panorama-terra-b1-kld.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 267.2,
+        "y": 133.84
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "bedroom-1",
+      "title": "Bedroom 1",
+      "description": "Bedroom with an open wardrobe and timber flooring.",
+      "panorama": "/assets/panorama-terra-b1-bedroom1.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 163.2,
+        "y": 154.84
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "bathroom-2",
+      "title": "Bathroom 2",
+      "description": "Bathroom with a glass shower enclosure and textured dark tile wall.",
+      "panorama": "/assets/panorama-terra-b1-bathroom2.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 172.0,
+        "y": 78.4
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "master-bedroom-bed",
+      "title": "Master Bedroom \u2014 Bed",
+      "description": "Master bedroom, looking towards the bed, with a TV on a timber console and striped curtains.",
+      "panorama": "/assets/panorama-terra-b1-masterbed-bed.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 96.8,
+        "y": 156.8
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "master-bedroom-view",
+      "title": "Master Bedroom \u2014 View",
+      "description": "Master bedroom view towards the frosted glass panel and the room beyond.",
+      "panorama": "/assets/panorama-terra-b1-masterbed-view.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 106.0,
+        "y": 140.0
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "master-bathroom",
+      "title": "Master Bathroom",
+      "description": "Master bathroom with shower fixtures and dark speckled tiling.",
+      "panorama": "/assets/panorama-terra-b1-master-bathroom.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 92.0,
+        "y": 78.4
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "balcony",
+      "title": "Balcony",
+      "description": "Balcony accessed through a glass sliding door, with an open outlook over trees and buildings.",
+      "panorama": "/assets/panorama-terra-b1-balcony.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 294.8,
+        "y": 206.36
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "yard",
+      "title": "Yard",
+      "description": "Utility yard with a light-coloured wall and a glimpse of the outdoors.",
+      "panorama": "/assets/panorama-terra-b1-yard.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 228.0,
+        "y": 226.24
+      },
+      "hotSpots": []
+    }
+  ]
+}
