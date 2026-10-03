@@ -83,8 +83,15 @@ html,body{height:100%;overflow:hidden;font-family:var(--font);background:var(--n
   .brand{font-size:13px}
   .brand .mark{width:22px;height:22px;font-size:11px}
   #topbar .actions a{font-size:12px;padding:5px 10px}
-  #ui{padding:28px 14px 14px}
+  #ui{padding:22px 12px 12px}
   .scene-btn{padding:6px 12px;font-size:11.5px}
+  /* Butang scene: SATU baris boleh skrol (dulu flex-wrap -> 5 baris, tutup 26% skrin 360) */
+  .ui-bar{flex-direction:column;align-items:stretch;gap:10px}
+  .scene-nav{flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;
+    scrollbar-width:none;-webkit-overflow-scrolling:touch;
+    scroll-snap-type:x proximity;padding-bottom:2px}
+  .scene-nav::-webkit-scrollbar{display:none}
+  .scene-btn{flex:0 0 auto;scroll-snap-align:start}
 }
 
 /* Embed modal */
@@ -383,20 +390,24 @@ function closePanel() { document.getElementById('panel').classList.remove('open'
     }
   });
 
-  // Auto-hide UI
+  // Auto-hide UI — desktop: mousemove; SENTUH: touchstart/touchmove (mobil tiada mousemove,
+  // jadi tanpa ini bar butang scene kekal menutup 360 selama-lamanya).
   let uiTimer;
-  document.addEventListener('mousemove', function() {
+  function tunjukUI(auto) {
     document.getElementById('ui').classList.remove('hidden');
     document.getElementById('topbar').style.opacity = '1';
     clearTimeout(uiTimer);
-    uiTimer = setTimeout(function() {
-      document.getElementById('ui').classList.add('hidden');
-      document.getElementById('topbar').style.opacity = '0';
-    }, 4000);
-  });
-  document.addEventListener('touchstart', function() {
-    document.getElementById('ui').classList.toggle('hidden');
-  });
+    if (auto !== false) uiTimer = setTimeout(sembunyiUI, 3500);
+  }
+  function sembunyiUI() {
+    document.getElementById('ui').classList.add('hidden');
+    document.getElementById('topbar').style.opacity = '0';
+  }
+  document.addEventListener('mousemove', function () { tunjukUI(); });
+  document.addEventListener('touchmove', function () { tunjukUI(); }, { passive: true });
+  document.addEventListener('touchstart', function () { tunjukUI(); }, { passive: true });
+  // Mula timer serta-merta — jika tidak, UI bawah kekal terpapar sampai sentuhan pertama.
+  tunjukUI();
 
   // ── Embed modal ──
   document.getElementById('embedBtn').onclick = function(e) {
