@@ -16,11 +16,25 @@ html,body{height:100%;overflow:hidden;background:#000}
 /* Minimal scene nav for embed */
 #embed-nav{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:10;
   display:flex;gap:6px;padding:8px 14px;background:rgba(7,21,37,.7);border:1px solid rgba(200,169,106,.2);
-  border-radius:12px;backdrop-filter:blur(10px)}
-.embed-btn{padding:5px 12px;border-radius:8px;border:none;font-size:11px;font-weight:600;
+  border-radius:12px;backdrop-filter:blur(10px);
+  max-width:calc(100% - 24px);overflow-x:auto;overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;scrollbar-width:none;overscroll-behavior-x:contain}
+#embed-nav::-webkit-scrollbar{display:none}
+.embed-btn{flex:0 0 auto;white-space:nowrap;padding:5px 12px;border-radius:8px;border:none;font-size:11px;font-weight:600;
   color:#8a9aa8;background:rgba(255,255,255,.06);cursor:pointer;transition:all .2s;font-family:-apple-system,sans-serif}
 .embed-btn:hover{background:rgba(255,255,255,.12);color:#fff}
 .embed-btn.active{background:rgba(200,169,106,.2);color:#E8CE86}
+/* Nama scene sudah dipapar pada butang nav aktif — buang kotak tajuk Pannellum
+   supaya ia tidak bertindih dengan bar nav dalam iframe kecil (disemak 6 Okt 2026). */
+.pnlm-title-box{display:none!important}
+/* Iframe pendek (cth. telefon dalam halaman projek): rapatkan bar nav. */
+@media(max-height:340px){
+  #embed-nav{bottom:10px;padding:6px 10px;gap:5px;max-width:calc(100% - 16px)}
+  .embed-btn{padding:4px 9px;font-size:10px}
+}
+/* Kompas Pannellum berada di bawah-kanan dan bertindih dengan bar nav pada
+   SEMUA saiz iframe — naikkan ia supaya kekal boleh diklik (disemak 6 Okt 2026). */
+.pnlm-compass{bottom:60px!important}
 
 /* Loading */
 #loader{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;background:#071525;transition:opacity .5s}
