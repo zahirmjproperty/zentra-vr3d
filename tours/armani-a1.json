@@ -1,0 +1,159 @@
+{
+  "id": "armani-a1",
+  "title": "Residensi Armani Putra — Type A1 (SOHO)",
+  "property": "Residensi Armani Putra, Dengkil, Selangor",
+  "album": {
+    "id": "armani-putra-a1",
+    "name": "Residensi Armani Putra — Type A1"
+  },
+  "description": "360° virtual tour of a Type A1 SOHO unit at Residensi Armani Putra, Dengkil (550 sqft, 1 bedroom + 1 bathroom, Blok A). Entrance and dining, living area, kitchen, bedroom, study area, bathroom and service yard.",
+  "thumb": "/assets/panorama-armani-a1-living.jpg",
+  "created": "2026-10-07",
+  "floorplan": "/assets/floorplan-armani-a1.png",
+  "scenes": [
+    {
+      "id": "entrance-dining",
+      "title": "Entrance & Dining",
+      "description": "Main entrance into the open-plan dining area of the Type A1 SOHO unit.",
+      "panorama": "/assets/panorama-armani-a1-dining-entrance.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 155.6,
+        "y": 188.2
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "living",
+      "title": "Living Area",
+      "description": "Open-plan living area adjoining the dining zone, with a sofa and low table.",
+      "panorama": "/assets/panorama-armani-a1-living.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 168.4,
+        "y": 72.5
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "kitchen",
+      "title": "Kitchen",
+      "description": "Kitchen with base and wall units, hob and sink.",
+      "panorama": "/assets/panorama-armani-a1-kitchen.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 181.6,
+        "y": 157.1
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "bedroom",
+      "title": "Bedroom",
+      "description": "Bedroom with a bed and built-in wardrobe.",
+      "panorama": "/assets/panorama-armani-a1-bedroom.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 234.0,
+        "y": 70.6
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "outside-bedroom-door",
+      "title": "Corridor Outside Bedroom",
+      "description": "Corridor outside the bedroom door, linking the bedroom and study area to the living zone.",
+      "panorama": "/assets/panorama-armani-a1-outside-bedroom-door.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 236.0,
+        "y": 100.8
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "door-bedroom-bathroom",
+      "title": "Bedroom & Bathroom Doors",
+      "description": "Doors serving the bedroom and the bathroom, seen from the corridor.",
+      "panorama": "/assets/panorama-armani-a1-door-bedroom-bathroom.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 220.0,
+        "y": 112.0
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "bathroom",
+      "title": "Bathroom",
+      "description": "Bathroom with shower, WC and wash basin.",
+      "panorama": "/assets/panorama-armani-a1-bathroom.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 203.6,
+        "y": 149.5
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "study-area",
+      "title": "Study Area",
+      "description": "Study area beside the bedroom — a workspace nook in the Type A1 layout.",
+      "panorama": "/assets/panorama-armani-a1-study-area.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 244.8,
+        "y": 116.8
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "yard",
+      "title": "Yard & AC Ledge",
+      "description": "Service yard and air-conditioning ledge at the rear of the unit.",
+      "panorama": "/assets/panorama-armani-a1-yard.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "position": {
+        "x": 212.8,
+        "y": 188.2
+      },
+      "hotSpots": []
+    }
+  ]
+}
