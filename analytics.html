@@ -84,7 +84,7 @@ body{font-family:var(--font);background:radial-gradient(1100px 620px at 12% -8%,
     const tourIds = Object.keys(data);
 
     if (tourIds.length === 0) {
-      content.innerHTML = '<div class="empty-state"><div class="icon">📭</div><h3>No data yet</h3><p>Tour analytics will appear here after someone views a tour. Open a tour and navigate between scenes to generate data.</p><div class="actions" style="justify-content:center"><a href="tour.html?id=demo-001" class="tour-btn" style="text-decoration:none;color:var(--gold-light);border-color:var(--gold)">Open Demo Tour →</a></div></div>';
+      content.innerHTML = '<div class="empty-state"><div class="icon">📭</div><h3>No data yet</h3><p>Tour analytics will appear here after someone views a tour. Open a tour and navigate between scenes to generate data.</p></div>';
       return;
     }
 

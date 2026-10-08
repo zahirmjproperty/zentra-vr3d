@@ -289,7 +289,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--font);background:var(--n
 <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
 <script>
 // ── Dynamic tour loader ──
-const tourId = new URLSearchParams(window.location.search).get('id') || 'demo-001';
+const tourId = new URLSearchParams(window.location.search).get('id') || 'armani-a1';
 
 // NOTE: an earlier half-finished loader used to live here (initTour/loadSceneDirect at top level).
 // It appended a SECOND set of scene buttons wired to a no-op loadScene, so scene switching
@@ -302,7 +302,7 @@ function closePanel() { document.getElementById('panel').classList.remove('open'
 
 (function() {
   const params = new URLSearchParams(window.location.search);
-  const tourId = params.get('id') || 'demo-001';
+  const tourId = params.get('id') || 'armani-a1';
   let viewer = null;
   let scenes = [];
 
@@ -516,7 +516,7 @@ function closePanel() { document.getElementById('panel').classList.remove('open'
   
   function loadFloorplan() {
     // We need the tour data - get it from a cached fetch or re-fetch
-    const tourId = new URLSearchParams(window.location.search).get('id') || 'demo-001';
+    const tourId = new URLSearchParams(window.location.search).get('id') || 'armani-a1';
     fetch('/tours/' + tourId + '.json').then(r => r.json()).then(tour => {
       if (!tour.floorplan) {
         document.getElementById('fpCanvas').innerHTML = '<div style="padding:40px;text-align:center;color:var(--muted);font-size:13px">No floor plan available</div>';
@@ -607,7 +607,7 @@ function closePanel() { document.getElementById('panel').classList.remove('open'
   // Add floor plan marker update to togglePanelBtn
   function updateFloorplanMarker(sceneId) {
     if (!floorplanActive) return;
-    fetch('/tours/' + (new URLSearchParams(window.location.search).get('id') || 'demo-001') + '.json')
+    fetch('/tours/' + (new URLSearchParams(window.location.search).get('id') || 'armani-a1') + '.json')
       .then(r => r.json()).then(tour => {
         const s = tour.scenes.find(x => x.id === sceneId);
         if (s && tour.floorplan) updateMarker(s);
@@ -758,7 +758,7 @@ function closePanel() { document.getElementById('panel').classList.remove('open'
   
     document.getElementById('snapWhatsApp').onclick = function() {
       const canvas = document.getElementById('snapCanvas');
-      const tourUrl = window.location.origin + '/tour.html?id=' + (new URLSearchParams(window.location.search).get('id') || 'demo-001');
+      const tourUrl = window.location.origin + '/tour.html?id=' + (new URLSearchParams(window.location.search).get('id') || 'armani-a1');
       const text = encodeURIComponent('Take a virtual tour of this property! 🏠\n' + tourUrl);
       window.open('https://wa.me/?text=' + text, '_blank');
     };

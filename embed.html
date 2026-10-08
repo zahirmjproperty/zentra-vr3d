@@ -52,7 +52,7 @@ html,body{height:100%;overflow:hidden;background:#000}
 <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
 <script>
 (async function(){
-  const tourId = new URLSearchParams(location.search).get('id') || 'demo-001';
+  const tourId = new URLSearchParams(location.search).get('id') || 'armani-a1';
   try {
     const res = await fetch('/tours/' + tourId + '.json');
     if (!res.ok) throw new Error('HTTP ' + res.status);

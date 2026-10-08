@@ -2,9 +2,9 @@
 """generate_qr.py — Generate QR codes for VR tours.
 
 Usage:
-    python3 generate_qr.py tours/demo-001.json
+    python3 generate_qr.py tours/armani-a1.json
     python3 generate_qr.py --all                          # All tours
-    python3 generate_qr.py tours/demo-001.json --print     # Print to terminal
+    python3 generate_qr.py tours/armani-a1.json --print     # Print to terminal
     
 Output:
     assets/qr/<tour-id>.png — QR code image (1024x1024)
@@ -87,7 +87,7 @@ def main():
             else:
                 print(f"  ⚠ Not found: {t}")
     else:
-        print("Usage: generate_qr.py tours/demo-001.json  or  generate_qr.py --all")
+        print("Usage: generate_qr.py tours/armani-a1.json  or  generate_qr.py --all")
         return
 
     if not files:
