@@ -166,6 +166,11 @@ html,body{height:100%;overflow:hidden;font-family:var(--font);background:var(--n
 @keyframes fpPulse{0%{opacity:1;transform:scale(.8)}50%{opacity:0;transform:scale(2)}100%{opacity:0;transform:scale(2)}}
 .fp-label{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);background:rgba(7,21,37,.85);backdrop-filter:blur(8px);padding:6px 14px;border-radius:100px;border:1px solid var(--hair);font-size:11px;color:var(--gold-light);font-weight:600;white-space:nowrap;z-index:4;pointer-events:none;transition:all .35s}
 .fp-scenes{padding:8px 12px 12px;border-top:1px solid var(--hair);flex-shrink:0;display:flex;gap:6px;overflow-x:auto}
+.fp-floors{padding:10px 12px 0;display:flex;gap:6px;flex-shrink:0;flex-wrap:wrap}
+.fp-floor-btn{padding:5px 12px;border-radius:100px;border:1px solid var(--hair-solid);background:var(--kaca);color:var(--muted);font-size:11px;font-weight:600;cursor:pointer;transition:all .2s}
+.fp-floor-btn:hover{border-color:var(--gold);color:#fff}
+.fp-floor-btn.active{background:var(--grad-gold);color:var(--navy);border-color:transparent}
+.fp-floors:empty{display:none}
 .fp-scene-btn{padding:6px 12px;border-radius:100px;border:1px solid var(--hair-solid);background:var(--kaca);color:var(--muted);font-size:11px;cursor:pointer;white-space:nowrap;transition:all .2s}
 .fp-scene-btn:hover{border-color:var(--gold);color:#fff}
 .fp-scene-btn.active{background:var(--grad-gold);color:var(--navy);font-weight:700;border-color:transparent}
@@ -228,6 +233,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--font);background:var(--n
     <h3>Floor Plan</h3>
     <button id="fpClose">&times;</button>
   </div>
+  <div class="fp-floors" id="fpFloors"></div>
   <div class="fp-canvas" id="fpCanvas">
     <img id="fpImg" alt="Floor plan" style="display:none">
     <div id="fpMarker" class="fp-marker">
@@ -496,7 +502,10 @@ function closePanel() { document.getElementById('panel').classList.remove('open'
   // ── Floor plan ──
   let floorplanActive = false;
   let currentScenePos = {x: 50, y: 50};
-  
+  let fpTour = null;        // cached tour JSON for the floor-plan panel
+  let fpFloor = null;       // active floor id (multi-floor tours)
+  const FP_DEFAULT_FLOOR = 'ground';
+
   document.getElementById('floorplanBtn').onclick = function(e) {
     e.preventDefault();
     const panel = document.getElementById('floorplanPanel');
@@ -513,47 +522,78 @@ function closePanel() { document.getElementById('panel').classList.remove('open'
     document.getElementById('floorplanPanel').classList.remove('open');
     floorplanActive = false;
   };
-  
+
+  // Multi-floor support: a tour may declare
+  //   "floorplans": [{id, name, src}, ...] and per-scene "floor": "<id>".
+  // Single-plan tours keep using "floorplan" and no floor tabs appear.
+  function fpFloorList(tour) {
+    if (tour.floorplans && tour.floorplans.length) return tour.floorplans;
+    return [];
+  }
+  function fpSrcForFloor(tour, fid) {
+    const f = fpFloorList(tour).find(x => x.id === fid);
+    return f ? f.src : tour.floorplan;
+  }
+  function fpBuildFloorTabs(tour) {
+    const box = document.getElementById('fpFloors');
+    const list = fpFloorList(tour);
+    box.innerHTML = '';
+    if (list.length < 2) return;             // no tabs for single-floor tours
+    list.forEach(f => {
+      const b = document.createElement('button');
+      b.className = 'fp-floor-btn' + (f.id === fpFloor ? ' active' : '');
+      b.textContent = f.name;
+      b.onclick = () => {
+        fpFloor = f.id;
+        fpShowFloor();
+      };
+      box.appendChild(b);
+    });
+  }
+  function fpShowFloor() {
+    if (!fpTour) return;
+    const src = fpSrcForFloor(fpTour, fpFloor);
+    const img = document.getElementById('fpImg');
+    const relayout = function() {
+      fpLayout = null;
+      computeFpLayout();
+      const c = fpTour.scenes.find(s => s.id === currentScene) || fpTour.scenes[0];
+      if (c) updateMarker(c);
+    };
+    if (src && img.getAttribute('src') !== src) {
+      img.onload = relayout;
+      img.src = src;
+    } else if (img.complete) {
+      relayout();
+    }
+    img.style.display = '';
+    fpBuildFloorTabs(fpTour);
+    // Only list the scenes on the floor being shown
+    const list = document.getElementById('fpScenes');
+    list.innerHTML = '';
+    fpTour.scenes.filter(s => !fpFloor || !s.floor || s.floor === fpFloor).forEach(s => {
+      const btn = document.createElement('button');
+      btn.className = 'fp-scene-btn' + (s.id === currentScene ? ' active' : '');
+      btn.textContent = s.title;
+      btn.onclick = () => { loadScene(s.id); updateMarker(s); };
+      list.appendChild(btn);
+    });
+  }
+
   function loadFloorplan() {
-    // We need the tour data - get it from a cached fetch or re-fetch
     const tourId = new URLSearchParams(window.location.search).get('id') || 'armani-a1';
+    if (fpTour && fpTour.id === tourId) { fpShowFloor(); return; }
     fetch('/tours/' + tourId + '.json').then(r => r.json()).then(tour => {
-      if (!tour.floorplan) {
+      if (!tour.floorplan && !fpFloorList(tour).length) {
         document.getElementById('fpCanvas').innerHTML = '<div style="padding:40px;text-align:center;color:var(--muted);font-size:13px">No floor plan available</div>';
         return;
       }
-      // Show floor plan image if not loaded
-      const img = document.getElementById('fpImg');
-      const relayout = function() {
-        fpLayout = null;
-        computeFpLayout();
-        const c = tour.scenes.find(s => s.id === currentScene) || tour.scenes[0];
-        if (c) updateMarker(c);
-      };
-      if (img.src !== window.location.origin + tour.floorplan) {
-        img.onload = relayout;
-        img.src = tour.floorplan;
-        img.style.display = '';
-      } else if (img.complete) {
-        relayout();
-      }
-      // Hide old canvas content if any
-      document.querySelectorAll('.fp-canvas img, .fp-canvas svg').forEach(el => el.style.display = '');
-      
-      // Build scene buttons
-      const list = document.getElementById('fpScenes');
-      list.innerHTML = '';
-      tour.scenes.forEach(s => {
-        const btn = document.createElement('button');
-        btn.className = 'fp-scene-btn' + (s.id === currentScene ? ' active' : '');
-        btn.textContent = s.title;
-        btn.onclick = () => { loadScene(s.id); updateMarker(s); };
-        list.appendChild(btn);
-      });
-      
-      // Update marker for current scene
+      fpTour = tour;
+      // open on the floor of the current scene, else the default
       const cur = tour.scenes.find(s => s.id === currentScene) || tour.scenes[0];
-      updateMarker(cur);
+      const floors = fpFloorList(tour);
+      fpFloor = (cur && cur.floor) ? cur.floor : (floors[0] ? floors[0].id : null);
+      fpShowFloor();
     }).catch(e => {
       document.getElementById('fpCanvas').innerHTML = '<div style="padding:40px;text-align:center;color:var(--red);font-size:13px">Failed to load floor plan</div>';
     });
@@ -603,15 +643,21 @@ function closePanel() { document.getElementById('panel').classList.remove('open'
 
   // Patch loadScene to update floor plan marker when scene changes
   const origLoadScene = window.loadScene;
-  // We'll hook into the scene loading after init
-  // Add floor plan marker update to togglePanelBtn
   function updateFloorplanMarker(sceneId) {
     if (!floorplanActive) return;
+    const apply = function(tour) {
+      const s = tour.scenes.find(x => x.id === sceneId);
+      if (!s) return;
+      // Follow the scene onto its own floor when the tour has several plans
+      if (s.floor && fpFloor && s.floor !== fpFloor && fpFloorList(tour).length > 1) {
+        fpFloor = s.floor;
+        fpShowFloor();
+      }
+      if (tour.floorplan || fpFloorList(tour).length) updateMarker(s);
+    };
+    if (fpTour) { apply(fpTour); return; }
     fetch('/tours/' + (new URLSearchParams(window.location.search).get('id') || 'armani-a1') + '.json')
-      .then(r => r.json()).then(tour => {
-        const s = tour.scenes.find(x => x.id === sceneId);
-        if (s && tour.floorplan) updateMarker(s);
-      }).catch(() => {});
+      .then(r => r.json()).then(apply).catch(() => {});
   }
   
   // Override loadSceneDirect to call updateFloorplanMarker

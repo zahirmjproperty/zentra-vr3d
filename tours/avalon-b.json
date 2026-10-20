@@ -1,0 +1,419 @@
+{
+  "id": "avalon-b",
+  "title": "Avalon Cybersouth — Type B",
+  "property": "Avalon, Cybersouth, Dengkil, Selangor — Type B",
+  "album": {
+    "id": "avalon-cybersouth-b",
+    "name": "Avalon Cybersouth — Type B"
+  },
+  "category": "Terrace Houses",
+  "description": "360° virtual tour of an Avalon Cybersouth Type B double-storey terrace house — car porch and entrance, open living and dining, kitchen and outdoor kitchen, rear and side terraces, a ground-floor bedroom with bathroom, then upstairs the family area, master suite with walk-in closet and en-suite, three more bedrooms, two bathrooms and the balcony.",
+  "thumb": "/assets/panorama-avalon-b-car-porch.jpg",
+  "created": "2026-10-21",
+  "floorplan": "/assets/floorplan-avalon-b-ground.png",
+  "floorplans": [
+    {
+      "id": "ground",
+      "name": "Ground Floor",
+      "src": "/assets/floorplan-avalon-b-ground.png"
+    },
+    {
+      "id": "first",
+      "name": "First Floor",
+      "src": "/assets/floorplan-avalon-b-first.png"
+    }
+  ],
+  "scenes": [
+    {
+      "id": "car-porch",
+      "title": "Car Porch",
+      "description": "Covered car porch at the front of the unit, with space for two cars and the main entrance door alongside.",
+      "panorama": "/assets/panorama-avalon-b-car-porch.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "floor": "ground",
+      "position": {
+        "x": 300,
+        "y": 221.2
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "entrance",
+      "title": "Main Entrance",
+      "description": "Main entrance opening into the living area, with a window beside the door and the staircase beyond.",
+      "panorama": "/assets/panorama-avalon-b-entrance.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "floor": "ground",
+      "position": {
+        "x": 252,
+        "y": 182.0
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "living",
+      "title": "Living Room",
+      "description": "Living area with sofa set facing a TV console, opening onto the side terrace through a glass door.",
+      "panorama": "/assets/panorama-avalon-b-living.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "floor": "ground",
+      "position": {
+        "x": 244,
+        "y": 140.0
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "living-dining",
+      "title": "Living & Dining",
+      "description": "The open living and dining space seen as one volume, with the staircase to the right and the kitchen beyond.",
+      "panorama": "/assets/panorama-avalon-b-living-dining.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "floor": "ground",
+      "position": {
+        "x": 240,
+        "y": 112.0
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "dining",
+      "title": "Dining",
+      "description": "Dining area with a round table for eight, directly off the kitchen and opening to the rear terrace.",
+      "panorama": "/assets/panorama-avalon-b-dining.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "floor": "ground",
+      "position": {
+        "x": 244,
+        "y": 75.6
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "dining-kitchen",
+      "title": "Dining & Kitchen",
+      "description": "Dining and kitchen seen together — the kitchen counters run along the rear wall.",
+      "panorama": "/assets/panorama-avalon-b-dining-kitchen.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "floor": "ground",
+      "position": {
+        "x": 288,
+        "y": 75.6
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "kitchen",
+      "title": "Kitchen",
+      "description": "Kitchen with L-shaped counters, sink, hob and fridge, plus a breakfast bar.",
+      "panorama": "/assets/panorama-avalon-b-kitchen.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "floor": "ground",
+      "position": {
+        "x": 344,
+        "y": 75.6
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "outside-kitchen",
+      "title": "Outside Kitchen",
+      "description": "Rear outdoor kitchen and wash area off the terrace, under cover.",
+      "panorama": "/assets/panorama-avalon-b-outside-kitchen.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "floor": "ground",
+      "position": {
+        "x": 228,
+        "y": 56.0
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "terrace-dining",
+      "title": "Terrace — Dining Side",
+      "description": "Rear terrace running along the back of the house, accessed from the dining area.",
+      "panorama": "/assets/panorama-avalon-b-terrace-dining.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "floor": "ground",
+      "position": {
+        "x": 252,
+        "y": 42.0
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "terrace-living",
+      "title": "Terrace — Living Side",
+      "description": "Side terrace along the living area, with a door from the living room.",
+      "panorama": "/assets/panorama-avalon-b-terrace-living.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "floor": "ground",
+      "position": {
+        "x": 192,
+        "y": 103.6
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "bedroom-3",
+      "title": "Bedroom 3",
+      "description": "Bedroom 3 on the ground floor, with a double bed and wardrobe — suits guests or elderly family.",
+      "panorama": "/assets/panorama-avalon-b-bedroom-3.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "floor": "ground",
+      "position": {
+        "x": 364,
+        "y": 156.8
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "bath-3",
+      "title": "Bath 3",
+      "description": "Ground-floor bathroom serving Bedroom 3 and the living areas, with WC, basin and shower.",
+      "panorama": "/assets/panorama-avalon-b-bath-3.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "floor": "ground",
+      "position": {
+        "x": 296,
+        "y": 184.8
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "stairs-ground",
+      "title": "Staircase — Ground",
+      "description": "Staircase at the side of the living area leading to the first floor.",
+      "panorama": "/assets/panorama-avalon-b-stairs-ground.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "floor": "ground",
+      "position": {
+        "x": 308,
+        "y": 106.4
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "stairs-mid",
+      "title": "Staircase — Landing",
+      "description": "Mid-landing of the staircase, with the family area ahead.",
+      "panorama": "/assets/panorama-avalon-b-stairs-mid.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "floor": "first",
+      "position": {
+        "x": 292,
+        "y": 114.8
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "under-stairs",
+      "title": "Under-Stair Area",
+      "description": "Under-stair space, used for storage and access.",
+      "panorama": "/assets/panorama-avalon-b-under-stairs.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "floor": "ground",
+      "position": {
+        "x": 308,
+        "y": 126.0
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "family-area",
+      "title": "Family Area",
+      "description": "Family area on the first floor, with sofa and TV console, opening to the balcony.",
+      "panorama": "/assets/panorama-avalon-b-family-area.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "floor": "first",
+      "position": {
+        "x": 124,
+        "y": 120.4
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "master-bedroom",
+      "title": "Master Bedroom",
+      "description": "Master bedroom with a double bed, opening to the balcony and through to the walk-in closet and en-suite.",
+      "panorama": "/assets/panorama-avalon-b-master-bedroom.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "floor": "first",
+      "position": {
+        "x": 148,
+        "y": 75.6
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "walk-in-closet",
+      "title": "Walk-in Closet",
+      "description": "Walk-in closet off the master bedroom, with hanging rails and shelving.",
+      "panorama": "/assets/panorama-avalon-b-walk-in-closet.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "floor": "first",
+      "position": {
+        "x": 208,
+        "y": 84.0
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "master-bath",
+      "title": "Master Bath",
+      "description": "En-suite master bathroom with vanity, WC and shower.",
+      "panorama": "/assets/panorama-avalon-b-master-bath.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "floor": "first",
+      "position": {
+        "x": 300,
+        "y": 70.0
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "bedroom-1",
+      "title": "Bedroom 1",
+      "description": "Bedroom 1 on the first floor, with a double bed and wardrobe, served by Bath 1.",
+      "panorama": "/assets/panorama-avalon-b-bedroom-1.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "floor": "first",
+      "position": {
+        "x": 276,
+        "y": 170.8
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "bedroom-2",
+      "title": "Bedroom 2",
+      "description": "Bedroom 2 on the first floor, with a double bed and wardrobe, served by Bath 2.",
+      "panorama": "/assets/panorama-avalon-b-bedroom-2.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "floor": "first",
+      "position": {
+        "x": 116,
+        "y": 170.8
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "bath-1",
+      "title": "Bath 1",
+      "description": "First-floor bathroom on the right, with WC, basin and shower.",
+      "panorama": "/assets/panorama-avalon-b-bath-1.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "floor": "first",
+      "position": {
+        "x": 256,
+        "y": 218.4
+      },
+      "hotSpots": []
+    },
+    {
+      "id": "bath-2",
+      "title": "Bath 2",
+      "description": "First-floor bathroom on the left, with WC, basin and shower.",
+      "panorama": "/assets/panorama-avalon-b-bath-2.jpg",
+      "initial": {
+        "pitch": 0,
+        "yaw": 0,
+        "hfov": 100
+      },
+      "floor": "first",
+      "position": {
+        "x": 160,
+        "y": 218.4
+      },
+      "hotSpots": []
+    }
+  ]
+}
